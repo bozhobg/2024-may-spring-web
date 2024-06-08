@@ -24,14 +24,16 @@
         <div class="row g-3">
             <form
                     th:action="@{/users/register}"
-                    th:method="POST">
+                    th:method="POST"
+                    th:object="${registerData}"
+            >
                 <div>
                     <div class="col-auto">
                         <label for="inputUsername" class="col-form-label ">Username</label>
                     </div>
                     <div class="col-auto">
                         <input name="username"
-                               
+                               th:field="*{username}"
                                type="text"
                                id="inputUsername"
                                class="form-control"
@@ -51,6 +53,7 @@
                     </div>
                     <div class="col-auto">
                         <input name="fullname"
+                               th:field="*{fullname}"
                                type="text"
                                id="inputFullName"
                                class="form-control"
@@ -66,6 +69,7 @@
                     </div>
                     <div class="col-auto">
                         <input name="email"
+                               th:field="*{email}"
                                type="text"
                                id="inputEmail"
                                class="form-control"
@@ -80,6 +84,7 @@
                     </div>
                     <div class="col-auto">
                         <input name="age"
+                               th:field="*{age}"
                                type="number"
                                id="inputAge"
                                class="form-control"
