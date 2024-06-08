@@ -3,13 +3,12 @@ package bg.softuni.pathfinder.service;
 import bg.softuni.pathfinder.data.RouteRepository;
 import bg.softuni.pathfinder.model.Picture;
 import bg.softuni.pathfinder.model.Route;
-import bg.softuni.pathfinder.service.dto.RouteBasicInfoDto;
+import bg.softuni.pathfinder.service.dto.RouteShortInfoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +25,9 @@ public class RouteService {
     }
 
     @Transactional
-    public List<RouteBasicInfoDto> getRoutes() {
+    public List<RouteShortInfoDTO> getRoutes() {
 
-        List<RouteBasicInfoDto> allRoutes = this.routeRepository.findAll()
+        List<RouteShortInfoDTO> allRoutes = this.routeRepository.findAll()
                 .stream()
                 .map(this::mapToBasicInfoDto)
                 .toList();
@@ -40,9 +39,9 @@ public class RouteService {
         return allRoutes;
     }
 
-    private RouteBasicInfoDto mapToBasicInfoDto(Route route) {
+    private RouteShortInfoDTO mapToBasicInfoDto(Route route) {
 //        TODO: set view img
-        RouteBasicInfoDto dto = modelMapper.map(route, RouteBasicInfoDto.class);
+        RouteShortInfoDTO dto = modelMapper.map(route, RouteShortInfoDTO.class);
 
         Optional<Picture> optPicture = route.getPictures().stream().findFirst();
         String imageUrl = optPicture.map(Picture::getUrl).orElse(null);

@@ -1,6 +1,6 @@
 package bg.softuni.pathfinder.service.dto;
 
-public class RouteBasicInfoDto {
+public class RouteShortInfoDTO {
     private Long id;
     private String name;
     private String description;
