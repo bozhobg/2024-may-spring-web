@@ -35,12 +35,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 bg-dark"><img src="/pic/company.png" height="350px"></div>
-                    <div class="col-md-6 bg-dark">
+                    <div th:object="${companyData}"
+                            class="col-md-6 bg-dark">
                         <h2>Company</h2>
-                        <h4>Name: {name}</h4>
-                        <h4>Town: {town}</h4>
-                        <h4>Description: {description}</h4>
-                        <h4>Budget: {budget}</h4>
+                        <h4 th:text="'Name: ' + *{name}">Name: {name}</h4>
+                        <h4 th:text="'Town: ' + *{town}">Town: {town}</h4>
+                        <h4 th:text="'Description: ' + *{description}">Description: {description}</h4>
+                        <h4 th:text="'Budget: ' + *{budget}">Budget: {budget}</h4>
                         <div class="align-bottom"><a class="btn btn-danger align-bottom"
                                                      href="/">Delete company</a>
                         </div>
