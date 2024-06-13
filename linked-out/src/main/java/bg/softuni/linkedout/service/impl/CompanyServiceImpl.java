@@ -1,7 +1,8 @@
 package bg.softuni.linkedout.service.impl;
 
-import bg.softuni.linkedout.model.dto.CompanyBasicDTO;
-import bg.softuni.linkedout.model.dto.CompanyShortDTO;
+import bg.softuni.linkedout.model.dto.binding.CompanyBasicDTO;
+import bg.softuni.linkedout.model.dto.view.CompanyIdNameViewDTO;
+import bg.softuni.linkedout.model.dto.view.CompanyShortViewDTO;
 import bg.softuni.linkedout.model.entity.Company;
 import bg.softuni.linkedout.repository.CompanyRepository;
 import bg.softuni.linkedout.service.CompanyService;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -45,18 +45,31 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyBasicDTO getCompanyById(Long id) throws NoSuchElementException {
-
+//        TODO: handle non-existent id
         return modelMapper.map(companyRepository.findById(id).get(), CompanyBasicDTO.class);
     }
 
     @Override
-    public List<CompanyShortDTO> findAllShort() {
+    public List<CompanyIdNameViewDTO> findAllShort() {
 
-        List<CompanyShortDTO> list = companyRepository.findAll()
+        List<CompanyIdNameViewDTO> list = companyRepository.findAll()
                 .stream()
-                .map(e -> modelMapper.map(e, CompanyShortDTO.class))
+                .map(e -> modelMapper.map(e, CompanyIdNameViewDTO.class))
                 .toList();
 
         return list;
+    }
+
+    @Override
+    public List<CompanyShortViewDTO> getAllCompaniesView() {
+
+        return companyRepository.findAll()
+                .stream()
+                .map(e -> new CompanyShortViewDTO(
+                        e.getId(),
+                        e.getName(),
+                        e.getTown(),
+                        e.getDescription()))
+                .toList();
     }
 }

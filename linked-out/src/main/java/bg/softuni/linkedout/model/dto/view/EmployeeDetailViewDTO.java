@@ -1,41 +1,25 @@
-package bg.softuni.linkedout.model.dto;
-
-import jakarta.validation.constraints.*;
+package bg.softuni.linkedout.model.dto.view;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class EmployeeBasicDTO {
-//    TODO: use/test with record
+public class EmployeeDetailViewDTO {
 
-    @NotBlank(message = "Must not be blank")
-    @Size(min = 2, message = "Must be at least 2 letters long")
     private String firstName;
 
-    @NotBlank(message = "Must not be blank")
-    @Size(min = 2, message = "Must be at least 2 letters long")
     private String lastName;
 
-//    TODO: custom validation >= 18 years old
-    @NotNull(message = "Must not be empty")
-    @Past(message = "Must be past date")
     private LocalDate birthDate;
 
-    @NotBlank(message = "Must be selected valid form of completed education level")
     private String educationLevel;
 
-    @NotBlank(message = "Must not be empty")
     private String jobTitle;
 
-    @NotNull(message = "Must not be empty")
-    @Positive(message = "Must be a positive number")
     private BigDecimal salary;
 
-//    TODO: select a valid company id, addition db validation. Possible to send wrong value.
-    @NotNull(message = "Must be selected a valid company")
-    private Long companyId;
+    private String companyName;
 
-    public EmployeeBasicDTO() {}
+    public EmployeeDetailViewDTO(){}
 
     public String getFirstName() {
         return firstName;
@@ -85,11 +69,11 @@ public class EmployeeBasicDTO {
         this.salary = salary;
     }
 
-    public Long getCompanyId() {
-        return companyId;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

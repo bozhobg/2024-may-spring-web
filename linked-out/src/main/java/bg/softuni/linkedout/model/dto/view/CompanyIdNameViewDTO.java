@@ -1,12 +1,12 @@
-package bg.softuni.linkedout.model.dto;
+package bg.softuni.linkedout.model.dto.view;
 
-public class CompanyShortDTO {
+public class CompanyIdNameViewDTO {
 
     private Long id;
 
     private String name;
 
-    public CompanyShortDTO() {}
+    public CompanyIdNameViewDTO() {}
 
     public Long getId() {
         return id;

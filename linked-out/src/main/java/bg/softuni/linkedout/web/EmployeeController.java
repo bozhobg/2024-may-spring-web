@@ -1,6 +1,6 @@
 package bg.softuni.linkedout.web;
 
-import bg.softuni.linkedout.model.dto.EmployeeBasicDTO;
+import bg.softuni.linkedout.model.dto.binding.EmployeeBasicDTO;
 import bg.softuni.linkedout.model.enums.EducationLevel;
 import bg.softuni.linkedout.service.CompanyService;
 import bg.softuni.linkedout.service.EmployeeService;
@@ -27,8 +27,10 @@ public class EmployeeController {
     }
 
     @GetMapping("all")
-    public String getAll() {
+    public String getAll(Model model) {
 //        TODO: model and view
+        model.addAttribute("employees", employeeService.getAllEmployeeView());
+
         return "employee-all";
     }
 
@@ -57,18 +59,39 @@ public class EmployeeController {
                     "org.springframework.validation.BindingResult.employeeData",
                     bindingResult
             );
-//            TODO: fill in TL template, command objects
+
             return "redirect:/employees/add";
         }
+
 //        TODO: impl add logic and err handling
-        long newEmployeeId = employeeService.addEmployee(bindingModel);
+
+        long newEmployeeId;
+
+        try {
+            newEmployeeId = employeeService.addEmployee(bindingModel);
+        } catch (IllegalArgumentException e) {
+//            TODO: handle invalid education level, non-existing company
+            rAttrs.addFlashAttribute("employeeData", bindingModel);
+
+            return "redirect:/employees/add";
+        }
 
         return "redirect:/employees/details/" + newEmployeeId;
     }
 
     @GetMapping("details/{id}")
-    public String getDetails(@PathVariable("id") Long employeeId) {
-//        TODO: fill TL template, command objects
+    public String getDetails(@PathVariable("id") Long employeeId, Model model) {
+//        TODO: fill TL template, command objects, stick to formatting in html template
+
+        model.addAttribute("employeeData", employeeService.getEmployeeById(employeeId));
+
         return "employee-details";
+    }
+
+//    TODO: employee delete
+    @DeleteMapping("delete/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
+
+        return "redirect:/employees/all";
     }
 }

@@ -1,7 +1,8 @@
 package bg.softuni.linkedout.service;
 
-import bg.softuni.linkedout.model.dto.CompanyBasicDTO;
-import bg.softuni.linkedout.model.dto.CompanyShortDTO;
+import bg.softuni.linkedout.model.dto.binding.CompanyBasicDTO;
+import bg.softuni.linkedout.model.dto.view.CompanyIdNameViewDTO;
+import bg.softuni.linkedout.model.dto.view.CompanyShortViewDTO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,5 +14,7 @@ public interface CompanyService {
 
     CompanyBasicDTO getCompanyById(Long id) throws NoSuchElementException;
 
-    List<CompanyShortDTO> findAllShort();
+    List<CompanyIdNameViewDTO> findAllShort();
+
+    List<CompanyShortViewDTO> getAllCompaniesView();
 }

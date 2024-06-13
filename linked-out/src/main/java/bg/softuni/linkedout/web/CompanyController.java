@@ -1,6 +1,6 @@
 package bg.softuni.linkedout.web;
 
-import bg.softuni.linkedout.model.dto.CompanyBasicDTO;
+import bg.softuni.linkedout.model.dto.binding.CompanyBasicDTO;
 import bg.softuni.linkedout.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,9 @@ public class CompanyController {
     }
 
     @GetMapping("all")
-    public String getAll() {
+    public String getAll(Model model) {
+
+        model.addAttribute("companies", companyService.getAllCompaniesView());
 
         return "company-all";
     }
@@ -81,9 +83,9 @@ public class CompanyController {
         return "company-details";
     }
 
-//    TODO:
+//    TODO: company delete
     @DeleteMapping("details/{id}")
-    public String deleteCompany() {
+    public String deleteCompany(@PathVariable Long id) {
         return "redirect:/companies/all";
     }
 }
