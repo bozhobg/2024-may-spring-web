@@ -1,5 +1,6 @@
 package bg.softuni.linkedout.model.entity;
 
+import bg.softuni.linkedout.model.enums.EducationLevel;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -16,18 +17,18 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDate birthdate;
-
-    @Column(name = "education_level", nullable = false)
-    private String eductionLevel;
-
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
+    private LocalDate birthdate;
+
+    @Column(name = "education_level", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EducationLevel eductionLevel;
 
     @Column(name = "job_title", nullable = false)
     private String jobTitle;
@@ -56,11 +57,11 @@ public class Employee {
         this.birthdate = birthdate;
     }
 
-    public String getEductionLevel() {
+    public EducationLevel getEductionLevel() {
         return eductionLevel;
     }
 
-    public void setEductionLevel(String eductionLevel) {
+    public void setEductionLevel(EducationLevel eductionLevel) {
         this.eductionLevel = eductionLevel;
     }
 

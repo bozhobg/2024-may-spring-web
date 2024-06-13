@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 public class CompanyBasicDTO {
 
+//    TODO: use/test with record
+
     @NotBlank(message = "Name must not be empty")
     @Size(min = 2, max = 10, message = "Name must be between 2 and 10 letters")
     private String name;

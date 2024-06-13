@@ -42,11 +42,11 @@ public class CompanyController {
     public String postAdd(
             @Valid @ModelAttribute(name = "companyData") CompanyBasicDTO bindingModel,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes rAttrs
     ) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("companyData", bindingModel);
-            redirectAttributes.addFlashAttribute(
+            rAttrs.addFlashAttribute("companyData", bindingModel);
+            rAttrs.addFlashAttribute(
                     "org.springframework.validation.BindingResult.companyData",
                     bindingResult
             );
@@ -61,7 +61,7 @@ public class CompanyController {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
 //            TODO: handle existing company error. Global error message?
-            redirectAttributes.addFlashAttribute("companyName", bindingModel);
+            rAttrs.addFlashAttribute("companyName", bindingModel);
 
             return "redirect:/companies/add";
         }

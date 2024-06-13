@@ -32,69 +32,105 @@
             <div class="justify-content-center">
                 <h1>Add Employee</h1>
             </div>
-            <form class="m-md-auto w-50 text-center">
+            <form th:action="@{/employees/add}"
+                  th:method="POST"
+                  th:object="${employeeData}"
+                  class="m-md-auto w-50 text-center">
 
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control text-center" id="firstName" aria-describedby="firstName" name="firstName" />
-                    <small>Error message</small>
+                    <input th:field="*{firstName}"
+                           th:errorclass="bg-danger"
+                           type="text"
+                           class="form-control text-center"
+                           aria-describedby="firstName"/>
+                    <small th:errors="*{firstName}" class="text-danger">Error message</small>
                 </div>
 
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control text-center" id="lastName" aria-describedby="lastName" name="lastName"/>
-                    <small>Error message</small>
+                    <input th:field="*{lastName}"
+                           th:errorclass="bg-danger"
+                           type="text"
+                           class="form-control text-center"
+                           aria-describedby="lastName"/>
+                    <small th:errors="*{lastName}" class="text-danger">Error message</small>
                 </div>
                 <fieldset class="form-group">
                     <legend>Choose Education Level</legend>
-                    <div class="form-check">
+                    <div th:each="level : ${educationLevels}"
+                         class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="educationLevel"/>
-                            <span>Master</span>
+                            <input th:field="*{educationLevel}"
+                                   th:value="${level}"
+                                   type="radio"
+                                   class="form-check-input"/>
+                            <span th:text="${#strings.capitalize(#strings.toLowerCase(level))}">Master</span>
                         </label>
                     </div>
-                    <div class="form-check disabled">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="educationLevel"/>
-                            <span>Bachelor</span>
-                        </label>
-                    </div>
-                    <div class="form-check disabled">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input " name="educationLevel" />
-                            <span>Secondary</span>
-                        </label>
-                    </div>
-                    <small>Error message</small>
-					</fieldset>
+                    <!--                    <div class="form-check disabled">-->
+                    <!--                        <label class="form-check-label">-->
+                    <!--                            <input type="radio" class="form-check-input" name="educationLevel"/>-->
+                    <!--                            <span>Bachelor</span>-->
+                    <!--                        </label>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="form-check disabled">-->
+                    <!--                        <label class="form-check-label">-->
+                    <!--                            <input type="radio" class="form-check-input " name="educationLevel" />-->
+                    <!--                            <span>Secondary</span>-->
+                    <!--                        </label>-->
+                    <!--                    </div>-->
+                    <small th:errors="*{educationLevel}" class="text-danger">Error message</small>
+                </fieldset>
 
                 <div class="form-group">
                     <label for="company"><h5>All available companies</h5></label>
-                    <select multiple="false" class="form-control text-center" id="company" name="company">
-                        <option> First Company name</option>
-                        <option> Second Company name</option>
-                        <option> Third Company name</option>
+                    <select th:field="*{companyId}"
+                            th:errorclass="bg-danger"
+                            multiple="false"
+                            class="form-control text-center">
+                        <option th:each="company : ${companiesShort}"
+                                th:text="${company.name}"
+                                th:value="${company.id}">
+                            First Company name
+                        </option>
+                        <!--                        <option> First Company name</option>-->
+                        <!--                        <option> Second Company name</option>-->
+                        <!--                        <option> Third Company name</option>-->
                     </select>
-                    <small>Error message</small>
-				</div>
+<!--                    no specific instruction if field is required, may be empty i.e. employee not employed? -->
+                    <small th:errors="*{companyId}" class="text-danger">Error message</small>
+                </div>
 
                 <div class="form-group">
                     <label for="jobTitle">Job Title</label>
-                    <input type="text" class="form-control text-center" id="jobTitle" aria-describedby="jobTitle" name="jobTitle" />
-                    <small>Error message</small>
+                    <input th:field="*{jobTitle}"
+                           th:errorclass="bg-danger"
+                           type="text"
+                           class="form-control text-center"
+                           aria-describedby="jobTitle"/>
+                    <small th:errors="*{jobTitle}" class="text-danger">Error message</small>
                 </div>
 
                 <div class="form-group">
                     <label for="birthDate">Birth Date</label>
-                    <input type="date" class="form-control text-center" id="birthDate" aria-describedby="birthDate" name="birthDate" />
-                    <small>Error message</small>
+                    <input th:field="*{birthDate}"
+                           th:errorclass="bg-danger"
+                            type="date"
+                           class="form-control text-center"
+                           aria-describedby="birthDate"/>
+                    <small th:errors="*{birthDate}">Error message</small>
                 </div>
 
                 <div class="form-group">
                     <label for="salary">Salary</label>
-                    <input type="number" min="0" class="form-control text-center" id="salary" 
-					aria-describedby="salary" name="salary"/>
-                    <small>Error message</small>
+                    <input th:field="*{salary}"
+                           th:errorclass="bg-danger"
+                           type="number"
+                           min="0"
+                           class="form-control text-center"
+                           aria-describedby="salary"/>
+                    <small th:errors="*{salary}" class="text-danger">Error message</small>
                 </div>
 
                 <button type="submit" class="btn btn-secondary">Add Employee</button>
