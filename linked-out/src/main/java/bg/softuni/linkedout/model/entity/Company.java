@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Table(name = "companies")
 public class Company {
 
-//    TODO: String id
+//    TODO: UUID id
 //    TODO: validation at dto level keep entity model clean (or not)
 
     @Id

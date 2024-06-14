@@ -15,7 +15,8 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+        <div th:replace="~{fragments/navbar::navbar}"
+             class="collapse navbar-collapse " id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link text-white" href="/companies/add">Add Company</a>
                 <a class="nav-item nav-link text-white" href="/employees/add">Add Employee</a>
@@ -36,7 +37,7 @@
               th:object="${companyData}"
                 class="m-md-auto w-50 text-center">
             <div class="form-group">
-                <label for="name">Name</label>
+                <label th:for="name">Name</label>
                 <input th:field="*{name}"
                        th:errorclass="bg-danger"
                        type="text"
@@ -46,7 +47,7 @@
             </div>
 
             <div class="form-group">
-                <label for="town">Town</label>
+                <label th:for="town">Town</label>
                 <input th:field="*{town}"
                        th:errorclass="bg-danger"
                        type="text"
@@ -56,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label th:for="description">Description</label>
                 <input th:field="*{description}"
                        th:errorclass="bg-danger"
                        type="text"
@@ -65,7 +66,7 @@
             </div>
 
             <div class="form-group">
-                <label for="budget">Budget</label>
+                <label th:for="budget">Budget</label>
                 <input th:field="*{budget}"
                        th:errorclass="bg-danger"
                        type="number"

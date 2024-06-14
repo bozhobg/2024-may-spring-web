@@ -15,7 +15,8 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+        <div th:replace="~{fragments/navbar::navbar}"
+             class="collapse navbar-collapse " id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link text-white" href="/companies/add">Add Company</a>
                 <a class="nav-item nav-link text-white" href="/employees/add">Add Employee</a>
@@ -38,7 +39,7 @@
                   class="m-md-auto w-50 text-center">
 
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
+                    <label th:for="firstName">First Name</label>
                     <input th:field="*{firstName}"
                            th:errorclass="bg-danger"
                            type="text"
@@ -48,7 +49,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
+                    <label th:for="lastName">Last Name</label>
                     <input th:field="*{lastName}"
                            th:errorclass="bg-danger"
                            type="text"
@@ -84,7 +85,7 @@
                 </fieldset>
 
                 <div class="form-group">
-                    <label for="company"><h5>All available companies</h5></label>
+                    <label th:for="company"><h5>All available companies</h5></label>
                     <select th:field="*{companyId}"
                             th:errorclass="bg-danger"
                             multiple="false"
@@ -103,7 +104,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="jobTitle">Job Title</label>
+                    <label th:for="jobTitle">Job Title</label>
                     <input th:field="*{jobTitle}"
                            th:errorclass="bg-danger"
                            type="text"
@@ -113,7 +114,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="birthDate">Birth Date</label>
+                    <label th:for="birthDate">Birth Date</label>
                     <input th:field="*{birthDate}"
                            th:errorclass="bg-danger"
                             type="date"
@@ -123,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="salary">Salary</label>
+                    <label th:for="salary">Salary</label>
                     <input th:field="*{salary}"
                            th:errorclass="bg-danger"
                            type="number"

@@ -15,7 +15,8 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse float-right" id="navbarNavAltMarkup">
+        <div th:replace="~{fragments/navbar::navbar}"
+             class="collapse navbar-collapse float-right" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link text-white" href="/companies/add">Add Company</a>
                 <a class="nav-item nav-link text-white" href="/employees/add">Add Employee</a>
@@ -33,7 +34,8 @@
                 <div class="justify-content-center">
                     <h1>Welcome to LinkedOut Application</h1>
                 </div>
-                <div>Last update of Database: {Current date and time}</div>
+<!--                TODO: last update of DB, currently just the current time date-->
+                <div th:text="'Last update of Database: ' + ${#dates.createNow()}">Last update of Database: {Current date and time}</div>
 
             </main>
         </div>

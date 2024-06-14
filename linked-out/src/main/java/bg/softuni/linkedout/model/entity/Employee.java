@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Table(name = "employees")
 public class Employee {
 
-//    TODO: String id
+//    TODO: UUID id
 //    TODO: validation at dto level keep entity model clean (or not)
 
     @Id
