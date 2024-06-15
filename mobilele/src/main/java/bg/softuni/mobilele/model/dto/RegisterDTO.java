@@ -1,76 +1,73 @@
 package bg.softuni.mobilele.model.dto;
 
-import bg.softuni.mobilele.model.entity.UserRole;
-import bg.softuni.mobilele.model.enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
+import bg.softuni.mobilele.constants.ErrorMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.Instant;
 
 public class RegisterDTO {
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+//    TODO: validation with db
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String username;
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String password;
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String firstName;
 
-    @NotBlank
-    @Size(min = 2, max = 20)
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String lastName;
 
-    @NotNull
+//    TODO: validation with db
+    @NotNull(message = ErrorMessages.INVALID_SELECTION)
     private Long roleId;
 
     public RegisterDTO(){}
 
-    public @NotBlank @Size(min = 5, max = 20) String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(@NotBlank @Size(min = 5, max = 20) String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public @NotBlank @Size(min = 5, max = 20) String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(@NotBlank @Size(min = 5, max = 20) String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public @NotBlank @Size(min = 5, max = 20) String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(@NotBlank @Size(min = 5, max = 20) String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public @NotBlank @Size(min = 5, max = 20) String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(@NotBlank @Size(min = 5, max = 20) String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public @NotNull Long getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public RegisterDTO setRoleId(@NotNull Long roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
-        return this;
     }
 }
