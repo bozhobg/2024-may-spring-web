@@ -12,4 +12,15 @@ public class UserRole extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role name;
+
+    public UserRole() {}
+
+    public Role getName() {
+        return name;
+    }
+
+    public UserRole setName(Role name) {
+        this.name = name;
+        return this;
+    }
 }

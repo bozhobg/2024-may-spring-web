@@ -122,14 +122,14 @@
         <div class="form-group">
 <!--            TODO: multiple select => change model relation -->
             <label th:for="role" class="text-center text-white font-weight-bold">Roles</label>
-            <select th:field="*{role}"
+            <select th:field="*{roleId}"
                     th:errorclass="bg-danger"
                     class="form-control" multiple>
-                <option th:each="role : ${roles}"
-                        th:value="${role}" th:text="${role}">
+                <option th:each="opt : ${roles}"
+                        th:value="${opt.id}" th:text="${opt.name}">
                 </option>
             </select>
-            <p th:errors="*{role}" class="errors alert alert-danger">
+            <p th:errors="*{roleId}" class="errors alert alert-danger">
                 Selecting a role is required.
             </p>
         </div>

@@ -29,7 +29,7 @@ public class RegisterDTO {
     private String lastName;
 
     @NotNull
-    private Role role;
+    private Long roleId;
 
     public RegisterDTO(){}
 
@@ -65,11 +65,12 @@ public class RegisterDTO {
         this.lastName = lastName;
     }
 
-    public @NotNull Role getRole() {
-        return role;
+    public @NotNull Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(@NotNull Role role) {
-        this.role = role;
+    public RegisterDTO setRoleId(@NotNull Long roleId) {
+        this.roleId = roleId;
+        return this;
     }
 }
