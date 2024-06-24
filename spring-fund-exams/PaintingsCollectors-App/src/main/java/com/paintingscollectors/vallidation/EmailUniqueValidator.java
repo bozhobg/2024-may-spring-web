@@ -16,6 +16,8 @@ public class EmailUniqueValidator implements ConstraintValidator<EmailUnique, St
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+//        TODO: on register renders error for new email
+        
         return this.userService.isEmailUnique(value);
     }
 }
