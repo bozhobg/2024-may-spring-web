@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUsernameUnique(String username) {
-        return this.userRepository.existsByUsernameNot(username);
+        return !this.userRepository.existsByUsername(username);
     }
 
     @Override
     public boolean isEmailUnique(String email) {
-        return this.userRepository.existsByEmailNot(email);
+        return !this.userRepository.existsByEmail(email);
     }
 
     private User mapToUser(UserRegisterDTO dto) {

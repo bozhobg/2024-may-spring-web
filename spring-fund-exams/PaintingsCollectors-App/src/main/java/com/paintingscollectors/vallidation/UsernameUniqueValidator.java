@@ -16,7 +16,6 @@ public class UsernameUniqueValidator implements ConstraintValidator<UsernameUniq
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-//        TODO: on register with new username renders error
 
         return this.userService.isUsernameUnique(value);
     }

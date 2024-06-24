@@ -88,6 +88,7 @@ public class PaintingServiceImpl implements PaintingService {
 
     @Override
     public List<PaintingInfoDTO> getTopVoted() {
+//        TODO: taking from faved not from voted!
         return this.paintingRepository.findAll()
                 .stream()
                 .filter(Painting::getHasVotes)
