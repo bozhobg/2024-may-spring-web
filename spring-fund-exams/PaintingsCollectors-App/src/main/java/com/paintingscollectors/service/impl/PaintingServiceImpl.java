@@ -87,14 +87,20 @@ public class PaintingServiceImpl implements PaintingService {
     @Override
     public List<PaintingInfoDTO> getTopVoted() {
 //        FIXED: taking from faved not from voted, reverse sort by votes count and displaying top 2
+//        FIXED: custom repo query
 
-        return this.paintingRepository.findAll()
+//        return this.paintingRepository.findAll()
+//                .stream()
+//                .filter(Painting::getHasVotes)
+//                .map(this::mapToPaintingInfo)
+//                .sorted(Collections.reverseOrder(
+//                        Comparator.comparingInt(PaintingInfoDTO::getVotes)))
+//                .limit(2)
+//                .toList();
+
+        return this.paintingRepository.getTopTwoMostVoted()
                 .stream()
-                .filter(Painting::getHasVotes)
                 .map(this::mapToPaintingInfo)
-                .sorted(Collections.reverseOrder(
-                        Comparator.comparingInt(PaintingInfoDTO::getVotes)))
-                .limit(2)
                 .toList();
     }
 

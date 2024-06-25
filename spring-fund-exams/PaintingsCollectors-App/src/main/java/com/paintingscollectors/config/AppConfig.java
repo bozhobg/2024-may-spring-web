@@ -16,6 +16,8 @@ public class AppConfig {
 
     @Bean
     public ModelMapper modelMapper() {
+//        TODO: use in all mapping ops (remove manual maps), add custom map logic where needed
+
         return new ModelMapper();
     }
 }
