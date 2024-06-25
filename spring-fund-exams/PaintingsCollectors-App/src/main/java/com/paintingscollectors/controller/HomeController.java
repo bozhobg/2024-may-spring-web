@@ -34,8 +34,10 @@ public class HomeController {
 
         Long userId = currentUser.getId();
 
+//        TODO: Custom logic to hide favourite and vote buttons for user if done already
+//        TODO: Remove from other paintings faved ones, respectfully return to others if unfaved
+
         model.addAttribute("userPaintings", this.paintingService.getUserPaintings(userId));
-//        TODO: voted doesn't update home view
         model.addAttribute("favPaintings", this.paintingService.getUserFavs(userId));
         model.addAttribute("otherPaintings", this.paintingService.getOhterPaintings(userId));
         model.addAttribute("topVoted", this.paintingService.getTopVoted());
