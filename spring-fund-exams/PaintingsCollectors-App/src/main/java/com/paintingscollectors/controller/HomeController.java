@@ -35,7 +35,7 @@ public class HomeController {
         Long userId = currentUser.getId();
 
         model.addAttribute("userPaintings", this.paintingService.getUserPaintings(userId));
-//        TODO: test
+//        TODO: voted doesn't update home view
         model.addAttribute("favPaintings", this.paintingService.getUserFavs(userId));
         model.addAttribute("otherPaintings", this.paintingService.getOhterPaintings(userId));
         model.addAttribute("topVoted", this.paintingService.getTopVoted());

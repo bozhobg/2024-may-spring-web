@@ -14,9 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PaintingServiceImpl implements PaintingService {
@@ -88,12 +86,14 @@ public class PaintingServiceImpl implements PaintingService {
 
     @Override
     public List<PaintingInfoDTO> getTopVoted() {
-//        TODO: taking from faved not from voted!
+//        FIXED: taking from faved not from voted, reverse sort by votes count and displaying top 2
+
         return this.paintingRepository.findAll()
                 .stream()
                 .filter(Painting::getHasVotes)
-                .sorted(Comparator.comparingInt(f -> f.getFavedByUsers().size()))
                 .map(this::mapToPaintingInfo)
+                .sorted(Collections.reverseOrder(
+                        Comparator.comparingInt(PaintingInfoDTO::getVotes)))
                 .limit(2)
                 .toList();
     }
@@ -110,8 +110,11 @@ public class PaintingServiceImpl implements PaintingService {
 
         if (user == null || painting == null) return;
 
+//        TODO: use internal entity class logic to set/reset isFaved
+
         painting.getFavedByUsers().add(user);
         painting.setFavorite(true);
+
         this.paintingRepository.save(painting);
     }
 
@@ -138,6 +141,8 @@ public class PaintingServiceImpl implements PaintingService {
 
         if (painting == null || user == null) return;
 
+//        TODO: use of internal entity class logic to set hasVotes
+
         painting.getRatedByUsers().add(user);
         painting.setHasVotes(true);
 
@@ -146,7 +151,7 @@ public class PaintingServiceImpl implements PaintingService {
 
     private PaintingInfoDTO mapToPaintingInfo(Painting entity) {
         return this.modelMapper.map(entity, PaintingInfoDTO.class)
-                .setVotes(entity.getFavedByUsers().size());
+                .setVotes(entity.getRatedByUsers().size());
     }
 
     private Painting mapToPainting(PaintingAddDTO dto) {
