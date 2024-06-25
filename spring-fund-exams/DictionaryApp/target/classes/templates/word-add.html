@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<header th:replace="~{fragments/commons::nav}"></header>
+<main>
+    <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add word</span></h1>
+    <hr class="hr-3 w-25 bg-white"/>
+
+    <form class="mx-auto w-25 bg-blur rounded"
+          th:method="POST"
+          th:action="@{/words/add}"
+          th:object="${wordData}"
+    >
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label th:for="term" class="h4 mb-2">Term</label>
+            </div>
+            <textarea type="text" class="form-control"
+                      th:field="*{term}"
+                      th:errorclass="'is-invalid alert-danger'"
+            >
+
+            </textarea>
+            <small th:errors="*{term}"
+                   class="text-danger invalid-feedback">
+                Term error message
+            </small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label th:for="translation" class="h4 mb-2">Translation</label>
+            </div>
+            <textarea type="text" class="form-control"
+                      th:field="*{translation}"
+                      th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:errors="*{translation}"
+                   class="text-danger invalid-feedback">
+                Translation error message
+            </small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label th:for="example" class="h4 mb-2">Example</label>
+            </div>
+            <textarea type="text" class="form-control"
+                      th:field="*{example}"
+                      th:errorclass="'is-invalid alert-danger'"
+            >
+
+            </textarea>
+            <small class="text-danger invalid-feedback"
+                   th:errors="*{example}"
+            >
+                Example error message
+            </small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label th:for="date" class="h4 mb-2">Set input date</label>
+            </div>
+            <input type="date" class="form-control"
+                   th:field="*{date}"
+                   th:errorclass="'is-invalid alert-danger'"
+            />
+            <small class="text-danger invalid-feedback"
+                   th:errors="*{date}"
+            >
+                Input Date error message
+            </small>
+        </div>
+
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label th:for="languageId" class="h4 mb-2">Language</label>
+            </div>
+            <select class="browser-default custom-select"
+                    th:field="*{languageId}"
+                    th:errorclass="'is-invalid alert-danger'"
+            >
+                <option value="">Select language</option>
+                <option th:each="lang : ${languages}"
+                        th:value="${lang.id}" th:text="${lang.name}">Select language</option>
+<!--                <option value="GERMAN">German</option>-->
+<!--                <option value="FRENCH">French</option>-->
+<!--                <option value="SPANISH">Spanish</option>-->
+<!--                <option value="ITALIAN">Italian</option>-->
+            </select>
+
+            <small class="text-danger invalid-feedback"
+                   th:errors="*{languageId}"
+            >
+                Language error message
+            </small>
+        </div>
+
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-warning  mb-3" value="Register">Add word</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

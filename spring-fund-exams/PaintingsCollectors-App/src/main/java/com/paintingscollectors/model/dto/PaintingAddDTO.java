@@ -16,6 +16,8 @@ public class PaintingAddDTO {
     @Size(min = 5, max = 40, message = ErrorMessages.AUTHOR_LENGTH)
     private String author;
 
+//    TODO: Proper URL validation. Test with real links.
+
     @NotBlank(message = ErrorMessages.URL_BLANK)
     @Size(max = 150, message = ErrorMessages.URL_LENGTH)
     private String imageUrl;
