@@ -60,6 +60,7 @@ public class PaintingController {
         return "redirect:/home";
     }
 
+//    TODO: @DeleteMapping with form
     @GetMapping("/remove/{id}")
     public String removePainting(@PathVariable("id") Long paintingId) {
         if (!currentUser.isLogged()) return "redirect:/users/login";
@@ -70,6 +71,7 @@ public class PaintingController {
         return "redirect:/home";
     }
 
+//    TODO: @PostMapping with form
     @GetMapping("/fav/add/{id}")
     public String addToFav(@PathVariable("id") Long paintingId) {
         if (!currentUser.isLogged()) return "redirect:/users/login";
@@ -79,6 +81,7 @@ public class PaintingController {
         return "redirect:/home";
     }
 
+//    TODO: @DeleteMapping with form
     @GetMapping("/fav/remove/{id}")
     public String removeFromFav(@PathVariable("id") Long paintingId) {
         if (!currentUser.isLogged()) return "redirect:/users/login";
@@ -88,6 +91,7 @@ public class PaintingController {
         return "redirect:/home";
     }
 
+//    TODO: @PostMapping with form
     @GetMapping("/vote/add/{id}")
     public String addVote(
             @PathVariable("id") Long paintingId

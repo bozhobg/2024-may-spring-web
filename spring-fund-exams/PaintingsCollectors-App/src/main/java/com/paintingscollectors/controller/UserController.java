@@ -113,6 +113,7 @@ public class UserController {
         return "redirect:/users/login";
     }
 
+//    TODO: @PostMapping with form
     @GetMapping("/logout")
     public String getLogout() {
         if (!currentUser.isLogged()) return "redirect:/users/login";
