@@ -4,8 +4,13 @@ import bg.softuni.mobilele.constants.ErrorMessages;
 import jakarta.validation.constraints.*;
 
 public class LoginDTO {
+
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String username;
 
+    @NotBlank(message = ErrorMessages.NOT_BLANK)
+    @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String password;
 
     public LoginDTO() {}

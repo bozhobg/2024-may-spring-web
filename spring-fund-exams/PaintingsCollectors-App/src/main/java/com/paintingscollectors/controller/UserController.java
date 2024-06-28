@@ -123,6 +123,7 @@ public class UserController {
         return "redirect:/";
     }
 
+//    TODO: call as static in a util class
     private <T> void setRedirectAttrs(
             RedirectAttributes rAttrs,
             T bindingModel,

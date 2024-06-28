@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head th:replace="~{fragments/commons::head}">
     <meta charset="UTF-8">
     <title>MobiLeLeLe</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
@@ -13,7 +13,7 @@
 
 <body>
 
-<div th:replace="~{fragments/navbar::navbar}">
+<div th:replace="~{fragments/commons::navbar}">
      <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" href="/"><img alt="car picture" src="/img/car.png" class="logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -165,7 +165,7 @@
     </form>
 </div>
 
-<div>
+<div th:replace="~{fragments/commons::footer}">
     <footer> </footer>
 </div>
 

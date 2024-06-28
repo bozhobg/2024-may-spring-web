@@ -32,4 +32,11 @@ public class RoleServiceImpl implements RoleService {
                 .map(e -> modelMapper.map(e, RoleDTO.class))
                 .toList();
     }
+
+    @Override
+    public boolean isIdValid(Long id) {
+        if (id == null) return false;
+
+        return this.roleRepository.existsById(id);
+    }
 }

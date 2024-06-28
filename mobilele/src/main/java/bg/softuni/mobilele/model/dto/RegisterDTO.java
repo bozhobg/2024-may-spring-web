@@ -1,6 +1,8 @@
 package bg.softuni.mobilele.model.dto;
 
 import bg.softuni.mobilele.constants.ErrorMessages;
+import bg.softuni.mobilele.validation.RoleIdValid;
+import bg.softuni.mobilele.validation.UsernameUnique;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,9 +10,9 @@ import jakarta.validation.constraints.Size;
 
 public class RegisterDTO {
 
-//    TODO: validation with db
     @NotBlank(message = ErrorMessages.NOT_BLANK)
     @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
+    @UsernameUnique
     private String username;
 
     @NotBlank(message = ErrorMessages.NOT_BLANK)
@@ -25,8 +27,8 @@ public class RegisterDTO {
     @Size(min = 2, max = 20, message = ErrorMessages.LENGTH_BETWEEN_2_AND_20)
     private String lastName;
 
-//    TODO: validation with db
-    @NotNull(message = ErrorMessages.INVALID_SELECTION)
+//    @NotNull(message = ErrorMessages.INVALID_SELECTION)
+    @RoleIdValid
     private Long roleId;
 
     public RegisterDTO(){}

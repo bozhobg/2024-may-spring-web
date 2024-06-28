@@ -2,13 +2,13 @@ package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.model.dto.RegisterDTO;
 import bg.softuni.mobilele.model.dto.RoleDTO;
-import bg.softuni.mobilele.model.enums.Role;
 import bg.softuni.mobilele.service.RoleService;
 import bg.softuni.mobilele.service.UserService;
+import bg.softuni.mobilele.utils.CurrentUser;
+import bg.softuni.mobilele.utils.RedirectUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,14 +24,16 @@ public class UserRegisterController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final CurrentUser currentUser;
 
     @Autowired
     public UserRegisterController(
             UserService userService,
-            RoleService roleService
-    ) {
+            RoleService roleService,
+            CurrentUser currentUser) {
         this.userService = userService;
         this.roleService = roleService;
+        this.currentUser = currentUser;
     }
 
     @ModelAttribute(name = "registerData")
@@ -46,6 +48,7 @@ public class UserRegisterController {
 
     @GetMapping
     public String getRegister() {
+        if (currentUser.isLoggedIn()) return "redirect:/";
 
         return "auth-register";
     }
@@ -56,18 +59,21 @@ public class UserRegisterController {
             BindingResult bindingResult,
             RedirectAttributes rAttr
     ) {
+        if (currentUser.isLoggedIn()) return "redirect:/";
+
         if (bindingResult.hasErrors()) {
-            rAttr.addFlashAttribute("registerData", bindingModel);
-            rAttr.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.registerData",
-                    bindingResult
+
+            RedirectUtil.setRedirectBindingModelAndResult(
+                    rAttr,
+                    bindingModel,
+                    bindingResult,
+                    "registerData"
             );
 
             return "redirect:/users/register";
         }
 
-//        TODO: handle errors
-        this.userService.registerUser(bindingModel);
+        this.userService.register(bindingModel);
 
         return "redirect:/users/login";
     }
