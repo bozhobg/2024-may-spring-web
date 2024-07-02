@@ -78,6 +78,13 @@ public class UserServiceImpl implements UserService {
         this.currentUser.logout();
     }
 
+    @Override
+    public User getUserById(Long id) {
+
+        return this.userRepository.findById(id)
+                .orElse(null);
+    }
+
 
     private User mapToUser(RegisterDTO registerData) {
 

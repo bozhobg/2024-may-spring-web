@@ -2,13 +2,13 @@ package bg.softuni.mobilele.web;
 
 import bg.softuni.mobilele.model.dto.BrandWithModelsBasicDTO;
 import bg.softuni.mobilele.model.dto.OfferAddDTO;
+import bg.softuni.mobilele.model.enums.Engine;
 import bg.softuni.mobilele.service.BrandService;
 import bg.softuni.mobilele.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,28 +28,20 @@ public class OfferController {
         this.currentUser = currentUser;
     }
 
-    @ModelAttribute("offerData")
-    public OfferAddDTO offerData() {
-        return new OfferAddDTO();
-    }
-
-    @ModelAttribute("brandsData")
-    public List<BrandWithModelsBasicDTO> getBrandsAndModels() {
-
-        return this.brandService.getBrandWithModelsDTOs();
-    }
-
-    @GetMapping("/add")
-    public String getAdd() {
-        if (!this.currentUser.isLoggedIn()) return "redirect:/users/login";
-
-        return "offer-add";
-    }
-
     @GetMapping("/all")
     public String getAll() {
         if (!this.currentUser.isLoggedIn()) return "redirect:/users/login";
+//        TODO:
 
         return "offers";
+    }
+
+    @GetMapping("/offers/{id}")
+    public String getOfferDetails(
+            @PathVariable("id") Long offerId
+    ) {
+//        TODO:
+
+        return "details";
     }
 }
