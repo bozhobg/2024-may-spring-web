@@ -13,7 +13,7 @@
 
 <body>
 
-<div th:replace="~{fragments/commons::navbar}">
+<div th:replace="~{fragments/commons::navbar(activeLink=${details})}">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" href="/"><img alt="car picture" src="/img/car.png" class="logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

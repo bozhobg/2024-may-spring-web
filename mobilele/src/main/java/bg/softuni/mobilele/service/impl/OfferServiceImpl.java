@@ -1,5 +1,6 @@
 package bg.softuni.mobilele.service.impl;
 
+import bg.softuni.mobilele.model.dto.OfferBasicDTO;
 import bg.softuni.mobilele.model.dto.OfferPersistDTO;
 import bg.softuni.mobilele.model.dto.OfferDetailsDTO;
 import bg.softuni.mobilele.model.entity.Model;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.Year;
+import java.util.List;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -75,6 +77,16 @@ public class OfferServiceImpl implements OfferService {
         OfferPersistDTO dto = this.mapToUpdateView(offer);
 
         return dto;
+    }
+
+    @Override
+    public List<OfferBasicDTO> getOffersData() {
+        List<OfferBasicDTO> dtos = this.offerRepository.findAll()
+                .stream()
+                .map(o -> modelMapper.map(o, OfferBasicDTO.class))
+                .toList();
+
+        return dtos;
     }
 
     @Override

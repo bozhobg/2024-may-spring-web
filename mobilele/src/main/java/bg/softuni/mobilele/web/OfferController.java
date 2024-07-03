@@ -1,5 +1,6 @@
 package bg.softuni.mobilele.web;
 
+import bg.softuni.mobilele.model.dto.OfferBasicDTO;
 import bg.softuni.mobilele.model.dto.OfferDetailsDTO;
 import bg.softuni.mobilele.service.OfferService;
 import bg.softuni.mobilele.utils.CurrentUser;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/offers")
@@ -25,9 +28,15 @@ public class OfferController {
     }
 
     @GetMapping("/all")
-    public String getAll() {
+    public String getAll(
+            Model model
+    ) {
         if (!this.currentUser.isLoggedIn()) return "redirect:/users/login";
 //        TODO:
+
+        List<OfferBasicDTO> offersData = this.offerService.getOffersData();
+
+        model.addAttribute("offersData", offersData);
 
         return "offers";
     }

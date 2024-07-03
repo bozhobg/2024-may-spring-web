@@ -47,7 +47,7 @@ public class OfferPersistController {
 
     @ModelAttribute("brandsData")
     public List<BrandWithModelsBasicDTO> getBrandsAndModels() {
-        return this.brandService.getBrandWithModelsDTOs();
+        return this.brandService.getBrandWithModelsBasicDTOs();
     }
 
     @ModelAttribute("engineTypes")

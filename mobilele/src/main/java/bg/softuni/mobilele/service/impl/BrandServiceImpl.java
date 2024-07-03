@@ -1,6 +1,7 @@
 package bg.softuni.mobilele.service.impl;
 
 import bg.softuni.mobilele.model.dto.BrandWithModelsBasicDTO;
+import bg.softuni.mobilele.model.dto.BrandWithModelsInfoDTO;
 import bg.softuni.mobilele.model.entity.Brand;
 import bg.softuni.mobilele.repository.BrandRepository;
 import bg.softuni.mobilele.service.BrandService;
@@ -23,12 +24,21 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<BrandWithModelsBasicDTO> getBrandWithModelsDTOs() {
+    public List<BrandWithModelsBasicDTO> getBrandWithModelsBasicDTOs() {
 
         return this.brandRepository.findAll()
                 .stream()
                 .filter(b -> !b.getModels().isEmpty())
                 .map(b -> modelMapper.map(b, BrandWithModelsBasicDTO.class))
+                .toList();
+    }
+
+    @Override
+    public List<BrandWithModelsInfoDTO> getBrandsWithModelsInfoDTOs() {
+
+        return this.brandRepository.findAll()
+                .stream()
+                .map(b -> modelMapper.map(b, BrandWithModelsInfoDTO.class))
                 .toList();
     }
 }

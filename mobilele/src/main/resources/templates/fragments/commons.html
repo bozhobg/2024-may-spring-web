@@ -13,7 +13,7 @@
 
 <body>
 
-<div th:fragment="navbar">
+<div th:fragment="navbar(activeLink)">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
         <a class="navbar-brand" th:href="@{/}"><img alt="car picture" th:src="@{/img/car.png}" class="logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -25,9 +25,12 @@
             <ul class="navbar-nav mr-auto col-12 justify-content-between">
                 <li class="nav-item"
                     th:if="${@currentUser.isLoggedIn()}"
+
                 >
                     <a class="nav-link"
-                       th:href="@{/brands/all}">
+                       th:href="@{/brands/all}"
+                       th:classappend="${activeLink == 'brands'} ? 'active'"
+                    >
                         All Brands
                     </a>
                 </li>
@@ -35,14 +38,18 @@
                     th:if="${@currentUser.isLoggedIn()}"
                 >
                     <a class="nav-link"
-                       th:href="@{/offers/add}">
+                       th:href="@{/offers/add}"
+                       th:classappend="${activeLink == 'offer-add'} ? 'active'"
+                    >
                         Add Offer
                     </a>
                 </li>
                 <li class="nav-item"
                     th:if="${@currentUser.isLoggedIn()}">
                     <a class="nav-link"
-                       th:href="@{/offers/all}">
+                       th:href="@{/offers/all}"
+                       th:classappend="${activeLink == 'offers'} ? 'active'"
+                    >
                         All Offers
                     </a>
                 </li>
@@ -81,12 +88,15 @@
                     th:unless="${@currentUser.isLoggedIn()}"
                 >
                     <a class="nav-link"
-                       th:href="@{/users/register}">
+                       th:href="@{/users/register}"
+                       th:classappend="${activeLink == 'auth-register'} ? 'active'"
+                    >
                         Register
                     </a>
                 </li>
                 <li class="nav-item"
                     th:unless="${@currentUser.isLoggedIn()}"
+                    th:classappend="${activeLink == 'auth-login'} ? 'active'"
                 >
                     <a class="nav-link"
                        th:href="@{/users/login}">
