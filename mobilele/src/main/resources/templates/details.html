@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head th:replace="~{fragments/commons::head}">
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>MobiLeLeLe</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto col-12 justify-content-between">
                 <li class="nav-item"
-                    >
+                >
                     <a class="nav-link" href="/brands/all">All Brands</a>
                 </li>
                 <li class="nav-item">
@@ -52,53 +52,104 @@
                         <a class="nav-link" href="/users/logout">Logout</a>
                     </div>
                 </li>
-                
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/login">Login</a>
-                    </li>
-                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/login">Login</a>
+                </li>
+
             </ul>
         </div>
     </nav>
 </div>
 
 
-<div class="container-fluid">
+<div class="container-fluid"
+     th:object="${details}"
+>
     <h2 class="text-center text-white mt-5">Details</h2>
     <div class="offers row mx-auto d-flex flex-row justify-content-center">
-        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
+        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
 
             <div class="card-body pb-1">
-                <h5 class="card-title">
-                    Offer year Brand name Model name</h5>
+                <h5 class="card-title"
+                    th:text="|*{year} *{modelBrandName} *{modelName}|"
+                >
+                    Offer year Brand name Model name
+                </h5>
             </div>
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
-                    <div class="card-text"><span>• Mileage</span></div>
-                    <div class="card-text"><span>• Price</span></div>
-                    <div class="card-text"><span>• Engine type</span></div>
-                    <div class="card-text"><span>• Transmission type</span></div>
-                    <div class="card-text"><span>• Offer created</span></div>
-                    <div class="card-text"><span>• Offer modified</span></div>
-                    <div class="card-text"><span>• Seller - First and Last name</span></div>
+                    <div class="card-text">
+                        <span th:text="|• Mileage :  *{mileage} km|">
+                            • Mileage
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span th:text="|• Price : *{price}|">
+                            • Price
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span th:text="|• Engine type : *{engine}|">
+                            • Engine type
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span th:text="|• Transmission type : *{transmission}|">
+                            • Transmission type
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span>
+                            • Offer created :
+                            <span th:text="*{created} == null ? '-' : ${#dates.format(details.created, 'dd/MMM/yyyy HH:mm')}">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span>
+                            • Offer modified :
+                            <span th:text="*{modified} == null ? '-' : ${#dates.format(details.modified, 'dd/MMM/yyyy HH:mm')}">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="card-text">
+                        <span th:text="|• Seller - *{sellerFirstName} *{sellerLastName}|">
+                            • Seller - First and Last name
+                        </span>
+                    </div>
                 </li>
             </ul>
-            <div class="card-body">
-                <a class="card-link" href="/">Update</a>
-                <a class="card-link" href="/">Delete</a>
+            <div class="card-body"> <!-- form as inline not block: <parent class="form-inline"></> -->
+                <div class="form-inline"
+                     th:if="${@currentUser.id} == *{sellerId}"
+                >
+                    <a class="card-link" th:href="@{/offers/update/{id}(id=*{id})}">
+                        Update
+                    </a>
+                    <form th:action="@{/offers/{id}(id=*{id})}"
+                          th:method="DELETE"
+                    >
+                        <button type="submit" class="btn-link btn card-link">Delete</button>
+                    </form>
+                </div>
+
+                <!--                                <a class="card-link" href="/">-->
+                <!--                                    Delete-->
+                <!--                                </a>-->
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-            <img src="/" class="card-img-top"  alt="Car image">
+            <img th:src="*{imageUrl}" class="card-img-top" alt="Car image">
         </div>
     </div>
 </div>
 
 <div th:replace="~{fragments/commons::footer}">
-             <footer> </footer>
+    <footer></footer>
 </div>
 
 </body>

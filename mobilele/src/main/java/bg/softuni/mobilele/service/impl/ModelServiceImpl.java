@@ -1,6 +1,5 @@
 package bg.softuni.mobilele.service.impl;
 
-import bg.softuni.mobilele.model.dto.OfferAddDTO;
 import bg.softuni.mobilele.model.entity.Model;
 import bg.softuni.mobilele.repository.ModelRepository;
 import bg.softuni.mobilele.service.ModelService;
@@ -28,5 +27,8 @@ public class ModelServiceImpl implements ModelService {
         return this.modelRepository.existsById(id);
     }
 
-
+    @Override
+    public Model getModelById(Long id) {
+        return this.modelRepository.findById(id).orElse(null);
+    }
 }

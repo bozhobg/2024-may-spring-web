@@ -10,8 +10,10 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class OfferAddDTO {
+public class OfferPersistDTO {
 //    TODO: more specific validations
+
+    private Long id;
 
     @NotEmpty(message = ErrorMessages.NOT_BLANK)
     private String description;
@@ -44,23 +46,26 @@ public class OfferAddDTO {
     @YearValid(after = 1990, before = 2099)
     private Integer year;
 
-    //    TODO: manual set on entity lvl?
-    private Instant created;
-
-    //    TODO: manual set on entity lvl?
-    private Instant modified;
-
     @ModelValid
     private Long modelId;
 
-    public OfferAddDTO() {
+    public OfferPersistDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public OfferPersistDTO setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public OfferAddDTO setDescription(String description) {
+    public OfferPersistDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -69,7 +74,7 @@ public class OfferAddDTO {
         return engine;
     }
 
-    public OfferAddDTO setEngine(Engine engine) {
+    public OfferPersistDTO setEngine(Engine engine) {
         this.engine = engine;
         return this;
     }
@@ -78,7 +83,7 @@ public class OfferAddDTO {
         return imageUrl;
     }
 
-    public OfferAddDTO setImageUrl(String imageUrl) {
+    public OfferPersistDTO setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -87,7 +92,7 @@ public class OfferAddDTO {
         return mileage;
     }
 
-    public OfferAddDTO setMileage(Integer mileage) {
+    public OfferPersistDTO setMileage(Integer mileage) {
         this.mileage = mileage;
         return this;
     }
@@ -96,7 +101,7 @@ public class OfferAddDTO {
         return price;
     }
 
-    public OfferAddDTO setPrice(BigDecimal price) {
+    public OfferPersistDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -105,7 +110,7 @@ public class OfferAddDTO {
         return transmission;
     }
 
-    public OfferAddDTO setTransmission(Transmission transmission) {
+    public OfferPersistDTO setTransmission(Transmission transmission) {
         this.transmission = transmission;
         return this;
     }
@@ -114,26 +119,8 @@ public class OfferAddDTO {
         return year;
     }
 
-    public OfferAddDTO setYear(Integer year) {
+    public OfferPersistDTO setYear(Integer year) {
         this.year = year;
-        return this;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public OfferAddDTO setCreated(Instant created) {
-        this.created = created;
-        return this;
-    }
-
-    public Instant getModified() {
-        return modified;
-    }
-
-    public OfferAddDTO setModified(Instant modified) {
-        this.modified = modified;
         return this;
     }
 
@@ -141,7 +128,7 @@ public class OfferAddDTO {
         return modelId;
     }
 
-    public OfferAddDTO setModelId(Long modelId) {
+    public OfferPersistDTO setModelId(Long modelId) {
         this.modelId = modelId;
         return this;
     }
