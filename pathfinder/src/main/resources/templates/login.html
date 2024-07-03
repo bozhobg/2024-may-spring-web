@@ -1,6 +1,6 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragments/commons::head}">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Pathfinder</title>
@@ -23,10 +23,9 @@
 
         <div class="row g-3 align-items-center">
 
-            <form
-                    th:action="@{/users/login}"
-                    th:method="POST"
-                    th:object="${loginData}"
+            <form th:action="@{/users/login}"
+                  th:method="POST"
+                  th:object="${loginData}"
             >
                 <div>
                     <div class="col-auto">
@@ -34,11 +33,14 @@
                     </div>
                     <div class="col-auto">
                         <input type="text"
-                               name="username"
                                th:field="*{username}"
+                               th:errorclass="is-invalid"
+                               name="username"
                                id="inputUsername"
+                               required minlength="4" maxlength="20"
                                class="form-control"
                                aria-describedby="usernameHelpInline">
+                        <small th:errors="*{username}" class="invalid-feedback bg-danger text-dark"></small>
                     </div>
                 </div>
                 <div>
@@ -47,20 +49,27 @@
                     </div>
                     <div class="col-auto">
                         <input type="password"
+                               th:field="*{password}"
+                               th:errorclass="is-invalid"
                                name="password"
                                id="inputPassword" class="form-control"
+                               required minlength="4" maxlength="20"
                                aria-describedby="passwordHelpInline">
+                        <small th:errors="*{password}" class="invalid-feedback bg-danger text-dark"></small>
                     </div>
                 </div>
+
                 <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-primary btn-block w-50" type="submit">Login</button>
                 </div>
+
             </form>
         </div>
 
     </div>
 </main>
-<footer class="footer bg-blur rounded">
+<footer th:replace="~{fragments/commons::footer}"
+        class="footer bg-blur rounded">
     <div class="container-fluid text-center">
         <div class="h5 text-white">
             &copy; Lucho, Chocho & Spring Advanced Students 2021. All rights reserved.

@@ -11,12 +11,8 @@ import java.util.Random;
 public class HomeController {
 
     @GetMapping
-    public ModelAndView home(Model model) {
-        double sofiaTemp = new Random().nextDouble() * 100 - 50;
-        model.addAttribute("sofiaTemp", String.format("%.2f", sofiaTemp));
+    public String getIndex() {
 
-//        TODO: populate landing page data: most commented route, temps (live info), selection of, fix url links
-
-        return new ModelAndView("index");
+        return "index";
     }
 }

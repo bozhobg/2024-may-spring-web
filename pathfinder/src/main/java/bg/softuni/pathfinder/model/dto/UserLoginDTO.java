@@ -1,16 +1,17 @@
-package bg.softuni.pathfinder.service.dto;
+package bg.softuni.pathfinder.model.dto;
 
+import bg.softuni.pathfinder.constants.ErrorMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserLoginDTO {
 
-    @NotBlank
-    @Size(min = 4, max = 20)
+    @NotBlank(message = ErrorMessages.FIELD_NOT_BLANK)
+    @Size(min = 2, message = ErrorMessages.LENGTH_MIN_TWO)
     private String username;
 
-    @NotBlank
-    @Size(min = 4, max =20)
+    @NotBlank(message = ErrorMessages.FIELD_NOT_BLANK)
+    @Size(min = 2, message = ErrorMessages.LENGTH_MIN_TWO)
     private String password;
 
     public UserLoginDTO() {}
