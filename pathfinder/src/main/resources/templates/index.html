@@ -102,22 +102,28 @@
     </section>
 
     <!-- Info Section -->
-    <section class="road">
-        <img src="/images/most-commented.jpg" alt="">
+    <section class="road"
+             th:object="${mostCommented}"
+    >
+        <img th:src="*{imageUrl}" alt="">
         <div>
-            <h2>The most commented route</h2>
-            <p>Read more about the most commented route and do not miss the
+            <h2 th:text="*{name}">The most commented route</h2>
+            <p th:text="*{description}">Read more about the most commented route and do not miss the
                 chance to visit it and give your opinion to help other users.</p>
-            <a href="/" class="btn">Learn More</a>
+            <a th:href="@{/routes/{id}(id=*{id})}" class="btn">Learn More</a>
         </div>
     </section>
 
     <!-- Portfolio -->
     <section class="gallery">
-        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630583467/koncyanx4gqwzt9vxgx4.jpg" width="200px"
-             height="200px" alt="">
-        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630582448/oowojgn4lagybkvv20jb.jpg" width="200px"
-             height="200px" alt="">
+        <img th:each="img : ${imageUrls}"
+             th:src="${img.url}"
+             th:alt="${img.routeName}"
+             width="200px" height="200px">
+        <!--        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630583467/koncyanx4gqwzt9vxgx4.jpg" width="200px"-->
+        <!--             height="200px" alt="">-->
+        <!--        <img src="http://res.cloudinary.com/ch-cloud/image/upload/v1630582448/oowojgn4lagybkvv20jb.jpg" width="200px"-->
+        <!--             height="200px" alt="">-->
     </section>
 
     <!-- <script th:src="@{/js/weather.js}"></script> -->

@@ -32,7 +32,7 @@ public class RouteServiceImpl implements RouteService {
 
         List<RouteShortInfoDTO> allRoutes = this.routeRepository.findAll()
                 .stream()
-                .map(this::mapToBasicInfoDto)
+                .map(this::mapToShortInfoDto)
                 .toList();
 
         if (allRoutes.isEmpty()) {
@@ -42,7 +42,15 @@ public class RouteServiceImpl implements RouteService {
         return allRoutes;
     }
 
-    private RouteShortInfoDTO mapToBasicInfoDto(Route route) {
+    @Override
+    public RouteShortInfoDTO getMostCommentedRoute() {
+        Route route = this.routeRepository.getMostCommentedRoute();
+        RouteShortInfoDTO dto = mapToShortInfoDto(route);
+
+        return dto;
+    }
+
+    private RouteShortInfoDTO mapToShortInfoDto(Route route) {
 //        TODO: set view img
         RouteShortInfoDTO dto = modelMapper.map(route, RouteShortInfoDTO.class);
 
