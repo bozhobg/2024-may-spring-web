@@ -12,5 +12,8 @@ public interface UserService {
     @Transactional
     boolean register(UserRegisterDTO dto);
 
+    @Transactional
     boolean login(UserLoginDTO dto);
+
+    void logout();
 }

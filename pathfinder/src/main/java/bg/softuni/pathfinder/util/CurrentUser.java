@@ -11,17 +11,27 @@ public class CurrentUser {
 
     private String username;
 
-    public void login(Long id, String username) {
+    private boolean isAdmin;
+
+    public void login(Long id, String username, boolean isAdmin) {
         this.id = id;
         this.username = username;
+        this.isAdmin = isAdmin;
     }
 
     public void logout() {
         this.id = null;
         this.username = null;
+        this.isAdmin = false;
     }
 
     public boolean isLogged() {
         return this.id != null;
+    }
+
+    public Boolean isAdmin() {
+//        Wrapper data type (null => not set)
+
+        return this.isAdmin;
     }
 }

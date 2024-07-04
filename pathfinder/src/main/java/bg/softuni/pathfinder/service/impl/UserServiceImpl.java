@@ -4,6 +4,7 @@ import bg.softuni.pathfinder.data.RoleRepository;
 import bg.softuni.pathfinder.data.UserRepository;
 import bg.softuni.pathfinder.model.dto.UserLoginDTO;
 import bg.softuni.pathfinder.model.dto.UserRegisterDTO;
+import bg.softuni.pathfinder.model.entity.Role;
 import bg.softuni.pathfinder.model.entity.User;
 import bg.softuni.pathfinder.model.enums.Level;
 import bg.softuni.pathfinder.model.enums.UserRole;
@@ -67,9 +68,20 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        this.currentUser.login(user.getId(), user.getFullName());
+        Role admin = this.roleRepository.findByName(UserRole.ADMIN);
+
+        this.currentUser.login(
+                user.getId(),
+                user.getFullName(),
+                admin != null && user.getRoles().contains(admin)
+        );
 
         return true;
+    }
+
+    @Override
+    public void logout() {
+        this.currentUser.logout();
     }
 
     private User mapFromRegisterDTO(UserRegisterDTO dto) {

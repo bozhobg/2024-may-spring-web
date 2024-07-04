@@ -1,7 +1,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:replace="~{fragments/commons::head}">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Pathfinder</title>
@@ -20,7 +20,7 @@
 <body>
 <div class="wrapper">
     <!-- Navigation -->
-<header>
+<header th:replace="~{fragments/commons::header-nav}">
     <nav class="main-nav">
         <ul>
                 <li>
@@ -62,7 +62,8 @@
 </div>
 <!-- Wrapper Ends -->
 </body>
-<footer class="footer bg-blur rounded">
+<footer th:replace="~{fragments/commons::footer}"
+        class="footer bg-blur rounded">
     <div class="container-fluid text-center">
         <div class="h5 text-white">
             &copy; Lucho, Chocho & Spring Advanced Students 2021. All rights reserved.
