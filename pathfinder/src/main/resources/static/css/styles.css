@@ -60,7 +60,7 @@ img {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.main-nav a {
+.main-nav a, .main-nav button {
     background: var(--primary);
     display: block;
     text-decoration: none;
@@ -72,9 +72,14 @@ img {
     box-shadow: var(--shadow);
 }
 
-.main-nav a:hover {
+.main-nav a:hover, .main-nav button:hover {
+    cursor: pointer;
     background: var(--dark);
     color: var(--light);
+}
+
+.main-nav form, .main-nav button {
+    width: 100%;
 }
 
 /* Top Container */

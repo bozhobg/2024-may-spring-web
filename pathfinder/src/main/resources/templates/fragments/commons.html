@@ -58,12 +58,12 @@
             </th:block>
             <!--            <th:block th:if="${@currentUser.isLogged()}">-->
             <th:block th:if="${@currentUser.isLogged()}">
-                <li>
+                <li class="form-inline">
                     <!--                    <a href="/">Logout</a>-->
 <!--                    TODO: How to stylize form and button to other nav elements-->
                     <form th:action="@{/users/logout}"
                           th:method="POST">
-                        <button type="submit">Logout</button>
+                        <button type="submit" class="border-0">Logout</button>
                     </form>
                 </li>
             </th:block>
