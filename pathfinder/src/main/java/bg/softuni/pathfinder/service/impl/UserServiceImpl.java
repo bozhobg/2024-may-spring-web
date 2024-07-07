@@ -3,6 +3,7 @@ package bg.softuni.pathfinder.service.impl;
 import bg.softuni.pathfinder.data.RoleRepository;
 import bg.softuni.pathfinder.data.UserRepository;
 import bg.softuni.pathfinder.model.dto.UserLoginDTO;
+import bg.softuni.pathfinder.model.dto.UserProfileDTO;
 import bg.softuni.pathfinder.model.dto.UserRegisterDTO;
 import bg.softuni.pathfinder.model.entity.Role;
 import bg.softuni.pathfinder.model.entity.User;
@@ -84,6 +85,15 @@ public class UserServiceImpl implements UserService {
         this.currentUser.logout();
     }
 
+    @Override
+    public UserProfileDTO getUserProfileData() {
+        User user = this.userRepository.findById(this.currentUser.getId()).orElse(null);
+
+        if (user == null) return null;
+
+        return mapToProfileData(user);
+    }
+
     private User mapFromRegisterDTO(UserRegisterDTO dto) {
         User user = modelMapper.map(dto, User.class)
                 .setLevel(Level.BEGINNER)
@@ -92,5 +102,9 @@ public class UserServiceImpl implements UserService {
         user.getRoles().add(this.roleRepository.findByName(UserRole.USER));
 
         return user;
+    }
+
+    private UserProfileDTO mapToProfileData(User user) {
+        return modelMapper.map(user, UserProfileDTO.class);
     }
 }

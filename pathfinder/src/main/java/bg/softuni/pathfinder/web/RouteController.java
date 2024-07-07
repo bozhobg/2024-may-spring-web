@@ -1,14 +1,18 @@
 package bg.softuni.pathfinder.web;
 
+import bg.softuni.pathfinder.model.dto.RouteAddDTO;
+import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
+import bg.softuni.pathfinder.model.enums.CategoryType;
+import bg.softuni.pathfinder.model.enums.Level;
 import bg.softuni.pathfinder.service.RouteService;
 import bg.softuni.pathfinder.util.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/routes")
@@ -41,10 +45,18 @@ public class RouteController {
     }
 
     @GetMapping("/add")
-    public String getAddRoute() {
+    public String getAddRoute(
+            Model model
+    ) {
         if (!currentUser.isLogged()) return "redirect:/users/login";
 
 //        TODO:
+        model.addAttribute("levels", Level.values());
+        model.addAttribute("categories", CategoryType.values());
+
+        if (!model.containsAttribute("routeData")) {
+            model.addAttribute("routeData", new RouteAddDTO());
+        }
 
         return "add-route";
     }
@@ -59,4 +71,25 @@ public class RouteController {
 
         return "redirect:/routes/" + routeId;
     }
+
+
+    @GetMapping("/{id}")
+    public String getDetails(
+            @PathVariable Long id,
+            Model model
+    ) {
+        if (!currentUser.isLogged()) return "redirect:/users/login";
+
+        RouteDetailsDTO routeData = this.routeService.getRouteDetails(id);
+
+        if (routeData == null) return "redirect:/routes";
+
+        model.addAttribute("routeDetails", routeData);
+
+//        TODO: provide/post/approve comments through rest, render using js, gpx map, video iframe, upload pic, download gpx
+
+        return "route-details";
+    }
+
+
 }

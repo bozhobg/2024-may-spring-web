@@ -4,7 +4,8 @@ public class PictureShortDTO {
 
     private String url;
 
-    private String routeName;
+    private String title;
+
 
     public String getUrl() {
         return url;
@@ -15,12 +16,12 @@ public class PictureShortDTO {
         return this;
     }
 
-    public String getRouteName() {
-        return routeName;
+    public String getTitle() {
+        return title;
     }
 
-    public PictureShortDTO setRouteName(String routeName) {
-        this.routeName = routeName;
+    public PictureShortDTO setTitle(String routeName) {
+        this.title = routeName;
         return this;
     }
 }

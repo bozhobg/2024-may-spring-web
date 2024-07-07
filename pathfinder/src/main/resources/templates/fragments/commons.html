@@ -53,14 +53,14 @@
             <th:block th:if="${@currentUser.isAdmin()}">
                 <li>
                     <!--                    TODO: what is the functionality? -->
-                    <a th:href="/">Admin</a>
+                    <a th:href="@{/}">Admin</a>
                 </li>
             </th:block>
             <!--            <th:block th:if="${@currentUser.isLogged()}">-->
             <th:block th:if="${@currentUser.isLogged()}">
                 <li class="form-inline">
                     <!--                    <a href="/">Logout</a>-->
-<!--                    TODO: How to stylize form and button to other nav elements-->
+<!--                    RESOLVED: How to stylize form and button to other nav elements-->
                     <form th:action="@{/users/logout}"
                           th:method="POST">
                         <button type="submit" class="border-0">Logout</button>

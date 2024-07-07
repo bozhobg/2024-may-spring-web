@@ -10,4 +10,6 @@ public interface PictureService {
 
     @Transactional
     List<PictureShortDTO> getPictureLinks();
+
+    List<PictureShortDTO> getRoutePictures(Long routeId);
 }

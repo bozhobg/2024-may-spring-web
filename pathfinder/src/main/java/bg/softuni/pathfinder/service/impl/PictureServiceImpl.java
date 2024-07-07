@@ -31,9 +31,24 @@ public class PictureServiceImpl implements PictureService {
 
         List<PictureShortDTO> list = this.pictureRepository.findAll()
                 .stream()
-                .map(p -> modelMapper.map(p, PictureShortDTO.class))
+                .map(this::mapToShort)
                 .toList();
 
         return list;
+    }
+
+    @Override
+    public List<PictureShortDTO> getRoutePictures(Long routeId) {
+
+        List<PictureShortDTO> list = this.pictureRepository.findByRoute_Id(routeId)
+                .stream()
+                .map(this::mapToShort)
+                .toList();
+
+        return list;
+    }
+
+    private PictureShortDTO mapToShort(Picture picture) {
+        return modelMapper.map(picture, PictureShortDTO.class);
     }
 }

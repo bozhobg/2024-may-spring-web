@@ -34,4 +34,12 @@ public class CurrentUser {
 
         return this.isAdmin;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

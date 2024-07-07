@@ -1,9 +1,11 @@
 package bg.softuni.pathfinder.service.impl;
 
 import bg.softuni.pathfinder.data.RouteRepository;
+import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
 import bg.softuni.pathfinder.model.entity.Picture;
 import bg.softuni.pathfinder.model.entity.Route;
 import bg.softuni.pathfinder.model.dto.RouteShortInfoDTO;
+import bg.softuni.pathfinder.service.PictureService;
 import bg.softuni.pathfinder.service.RouteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,17 @@ import java.util.Optional;
 public class RouteServiceImpl implements RouteService {
 
     final private RouteRepository routeRepository;
+    final private PictureService pictureService;
     final private ModelMapper modelMapper;
 
     @Autowired
     public RouteServiceImpl(
             RouteRepository routeRepository,
+            PictureService pictureService,
             ModelMapper modelMapper
     ) {
         this.routeRepository = routeRepository;
+        this.pictureService = pictureService;
         this.modelMapper = modelMapper;
     }
 
@@ -50,6 +55,15 @@ public class RouteServiceImpl implements RouteService {
         return dto;
     }
 
+    @Override
+    public RouteDetailsDTO getRouteDetails(Long id) {
+        Route route = this.routeRepository.findById(id).orElse(null);
+
+        if (route == null) return null;
+
+        return mapToRouteDetails(route);
+    }
+
     private RouteShortInfoDTO mapToShortInfoDto(Route route) {
 //        TODO: set view img
         RouteShortInfoDTO dto = modelMapper.map(route, RouteShortInfoDTO.class);
@@ -59,5 +73,11 @@ public class RouteServiceImpl implements RouteService {
         dto.setImageUrl(imageUrl);
 
         return dto;
+    }
+
+    private RouteDetailsDTO mapToRouteDetails(Route route) {
+
+        return modelMapper.map(route, RouteDetailsDTO.class);
+//                .setPictures(this.pictureService.getRoutePictures(route.getId()));
     }
 }
