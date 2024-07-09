@@ -120,7 +120,7 @@
         </section>
         <section class="gallery">
             <img th:each="pic : *{pictures}"
-                 class="rounded" th:src="${pic.url}" height="100%" th:alt="${pic.title}"
+                 class="rounded" th:src="@{${pic.url}}" height="100%" th:alt="${pic.title}"
             >
             <!--            <img class="rounded" src="/images/pic1.jpg" height="100%" alt="">-->
         </section>
