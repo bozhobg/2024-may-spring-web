@@ -1,11 +1,12 @@
 package bg.softuni.pathfinder.service;
 
+import bg.softuni.pathfinder.model.dto.PictureAddDTO;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.net.URI;
 
 public interface UploadService {
 
-    URI uploadGpx(MultipartFile gpxFile, Long routeId) throws IOException;
+    String uploadGpx(MultipartFile gpxFile, Long userId) throws IOException;
+
+    String uploadPicture(PictureAddDTO dto) throws IOException;
 }

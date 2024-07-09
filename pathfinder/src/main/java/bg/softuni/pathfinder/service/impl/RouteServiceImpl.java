@@ -86,21 +86,11 @@ public class RouteServiceImpl implements RouteService {
     public Long add(RouteAddDTO bindingModel, MultipartFile gpxFile) throws IOException {
 //        TODO: disaster
 
-        Route newRoute = mapToEntity(bindingModel);
+        Route newRoute = mapToEntity(bindingModel, gpxFile);
 
         if (newRoute == null) return null;
 
         Long routeId = this.routeRepository.save(newRoute).getId();
-
-        URI uri = this.uploadService.uploadGpx(gpxFile, routeId);
-
-        if (uri == null) {
-            this.routeRepository.delete(newRoute);
-            return null;
-        }
-
-        newRoute.setGpxCoordinates(uri.toString());
-        this.routeRepository.save(newRoute);
 
         return routeId;
     }
@@ -122,7 +112,7 @@ public class RouteServiceImpl implements RouteService {
 //                .setPictures(this.pictureService.getRoutePictures(route.getId()));
     }
 
-    private Route mapToEntity(RouteAddDTO dto) {
+    private Route mapToEntity(RouteAddDTO dto, MultipartFile gpxFile) throws IOException {
 //        TODO: set categories
 
         Route newRoute = modelMapper.map(dto, Route.class);
@@ -132,8 +122,17 @@ public class RouteServiceImpl implements RouteService {
 
         Set<Category> categories = this.categoryService.findByCategoryTypes(dto.getCategories());
         if (categories.isEmpty()) return null;
-
         newRoute.setCategories(categories);
+
+        String relPath;
+
+        try {
+            relPath = this.uploadService.uploadGpx(gpxFile, user.getId());
+        } catch (Exception exc) {
+            return null;
+        }
+
+        newRoute.setGpxCoordinates(relPath);
 
         return newRoute;
     }

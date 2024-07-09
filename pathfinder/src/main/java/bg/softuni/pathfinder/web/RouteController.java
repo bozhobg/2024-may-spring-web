@@ -1,6 +1,7 @@
 package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.constants.ErrorMessages;
+import bg.softuni.pathfinder.model.dto.PictureAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
 import bg.softuni.pathfinder.model.enums.CategoryType;
@@ -30,6 +31,7 @@ public class RouteController {
     private static final String ATTR_ROUTES = "routesData";
     private static final String ATTR_ADD = "routeData";
     private static final String ATTR_DETAILS = "routeDetails";
+    private static final String ATTR_UPLOAD = "uploadPicture";
 
     private final RouteService routeService;
     private final CurrentUser currentUser;
@@ -123,6 +125,10 @@ public class RouteController {
         if (routeData == null) return "redirect:/routes";
 
         model.addAttribute(ATTR_DETAILS, routeData);
+
+        if (!model.containsAttribute(ATTR_UPLOAD)) {
+            model.addAttribute(ATTR_UPLOAD, new PictureAddDTO());
+        }
 
 //        TODO: provide/post/approve comments through rest, render using js, gpx map, video iframe, upload pic, download gpx
 

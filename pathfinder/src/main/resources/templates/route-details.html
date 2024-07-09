@@ -76,19 +76,25 @@
             <div>
                 <h4>Choose picture</h4>
                 <!--                        TODO:-->
-                <form action="/"
-                      method="POST" enctype="multipart/form-data">
-                    <input type="hidden" id="id" name="routeId">
+                <form th:action="@{/pictures/add}"
+                      method="POST"
+                      enctype="multipart/form-data"
+                >
+                    <input type="hidden" id="id" name="routeId" th:value="*{id}">
                     <div class="form-group">
                         <label>
-                            <input type="text" name="title">
+                            <input type="text" name="title"
+                                   th:field="${uploadPicture.title}"
+                            >
                         </label>
                     </div>
                     <div class="image-upload">
                         <label for="picture">
                             <img src="/images/add-img.png" alt=""/>
                         </label>
-                        <input style="display: none" id="picture" type="file" name="picture"/>
+                        <input style="display: none" id="picture" type="file" name="picture"
+                               th:field="${uploadPicture.picture}"
+                        />
                     </div>
                     <div class="form-group">
                         <button class="btn-primary rounded">Upload Picture</button>
