@@ -70,6 +70,6 @@ public class UploadServiceImpl implements UploadService {
             return null;
         }
 
-        return fullPath.toString();
+        return "/pictures/" + subPath.toString();
     }
 }
