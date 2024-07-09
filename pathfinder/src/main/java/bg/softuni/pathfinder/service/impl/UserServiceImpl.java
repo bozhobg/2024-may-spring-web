@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -38,6 +40,11 @@ public class UserServiceImpl implements UserService {
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public User getById(Long id) {
+        return this.userRepository.findById(id).orElse(null);
     }
 
     @Override

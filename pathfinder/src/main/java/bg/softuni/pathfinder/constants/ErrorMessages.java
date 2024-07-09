@@ -9,4 +9,9 @@ public class ErrorMessages {
     public static final String FIELD_POSITIVE_OR_ZERO = "Field must be 0 or positive!";
     public static final String LENGTH_MIN_TWO = "Length must be equal or more than 2!";
     public static final String INVALID_LOGIN = "Invalid username or password!";
+    public static final String LENGTH_5_20 = "Field must be between 5 and 20 characters!";
+    public static final String LENGTH_MIN_5 = "Length must be equal or more than 5!";
+    public static final String EMPTY_SELECTION = "Must select valid options!";
+    public static final String YOUTUBE_ID = "Invalid YouTube id format!";
+    public static final String FILE_EMPTY = "Must upload gpx file!";
 }

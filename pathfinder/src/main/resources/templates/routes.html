@@ -51,7 +51,7 @@
         </nav>
     </header>
 
-    <section th:each = "route : ${routes}">
+    <section th:each = "route : ${routesData}">
         <div class="road">
             <img th:src="${route.imageUrl}" alt="Title image">
             <div>
