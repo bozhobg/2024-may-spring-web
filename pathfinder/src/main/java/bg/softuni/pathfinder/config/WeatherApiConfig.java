@@ -1,8 +1,11 @@
 package bg.softuni.pathfinder.config;
 
+import bg.softuni.pathfinder.model.dto.CoordinatesRequestDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 @ConfigurationProperties(prefix = "open-meteo.api") // needs getters and setters to fill in fields
@@ -67,6 +70,22 @@ public class WeatherApiConfig {
         return this;
     }
 
+    public String getVarnaLat() {
+        return varnaLat;
+    }
+
+    public String getVarnaLong() {
+        return varnaLong;
+    }
+
+    public String getSofiaLat() {
+        return sofiaLat;
+    }
+
+    public String getSofiaLong() {
+        return sofiaLong;
+    }
+
     public String getRequestCurrentVarna() {
 
         return String.format(REQUEST_FORMATTER, url, varnaLat, varnaLong, forecast, weatherCode);
@@ -75,5 +94,13 @@ public class WeatherApiConfig {
     public String getRequestCurrentSofia() {
 
         return String.format(REQUEST_FORMATTER, url, sofiaLat, sofiaLong, forecast, weatherCode);
+    }
+
+    public CoordinatesRequestDTO getCoordinatesSofia() {
+        return new CoordinatesRequestDTO(Double.parseDouble(getSofiaLat()), Double.parseDouble(getSofiaLong()));
+    }
+
+    public CoordinatesRequestDTO getCoordinatesVarna() {
+        return new CoordinatesRequestDTO(Double.parseDouble(getVarnaLat()), Double.parseDouble(getVarnaLong()));
     }
 }
