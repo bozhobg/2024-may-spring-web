@@ -53,6 +53,7 @@
     <input type="hidden"
            name="routeId"
            id="routeId"
+           th:value="${routeDetails.id}"
     >
     <div class="details-main"
          th:object="${routeDetails}"
@@ -130,8 +131,10 @@
 
             <div>
                 <!-- Comments submission -->
-                <form id="commentForm" method="POST"
-                      action="/">
+                <form id="commentForm"
+                      th:method="POST"
+                      th:action="@{/comments/add/{routeId}(routeId=${routeDetails.id})}"
+                >
                     <div class="form-group">
                         <h4>Leave a comment</h4>
                         <label for="message">Message</label>
@@ -140,8 +143,13 @@
                                   cols="30"
                                   rows="5"
                                   class="form-control"
-                                  style="background-color: white;"></textarea>
-                        <small id="messageError" class="invalid-feedback">
+                                  style="background-color: white;"
+                                  th:field="${comment.textContent}"
+                                  th:errorclass="'is-invalid'"
+                        ></textarea>
+                        <small id="messageError" class="invalid-feedback"
+                               th:if="${#fields.hasErrors('${comment.textContent}')}"
+                        >
                             Message should be at least 10 characters.
                         </small>
                     </div>
@@ -157,20 +165,43 @@
             </div>
 
             <!-- All comments section -->
-            <div>
+            <div class="comments-wrapper">
+<!--                <div class="comment ">-->
+<!--                    <p>Author: </p>-->
+<!--                    <p>Some comment</p>-->
+<!--                    <div class="form-inline">-->
+<!--                        <form th:action="@{/}"-->
+<!--                              th:method="POST">-->
+<!--                            <button class="btn bg-success comment-btn"-->
+<!--                                    type="submit">-->
+<!--                                &lt;!&ndash;                            btn no bg-color no color &ndash;&gt;-->
+<!--                                Approve-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                        <form th:action="@{/}"-->
+<!--                              th:method="POST">-->
+<!--                            <button class="btn bg-danger comment-btn"-->
+<!--                                    type="submit">-->
+<!--                                Delete-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+                </div>
 
-                <span id="commentCtnr"><!-- Comments section, filled in by script --></span>
+                <section id="commentCtnr"><!-- Comments section, filled in by script -->
+
+                </section>
             </div>
             <!-- EO: All comments section -->
         </section>
-<!--        TODO: -->
+        <!--        TODO: -->
         <p style="visibility: hidden">GPX Download: <a id="gpxDownload"></a></p>
     </div>
-<!--    TODO: comments retrieve via rest using ajax-->
+    <!--    TODO: comments retrieve via rest using ajax-->
     <!-- Scripts: track and comments
     <script th:src="@{/js/track.js}"></script>
-    <script th:src="@{/js/comments.js}"></script>
     -->
+    <script th:src="@{/js/comments.js}"></script>
 </div>
 <footer th:replace="~{fragments/commons::footer}"
         class="footer bg-blur rounded">

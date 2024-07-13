@@ -21,6 +21,8 @@ public class WeatherApiConfig {
     private String forecast;
     private String weatherCode;
 
+//    TODO: test with CoordinatesRequestDTO eg private DTO varna; private DTO sofia? mapping props to objs
+
     @Value("${open-meteo.varna.latitude}")
     private String varnaLat;
     @Value("${open-meteo.varna.longitude}")

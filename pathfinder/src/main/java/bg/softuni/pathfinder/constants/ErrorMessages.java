@@ -14,4 +14,7 @@ public class ErrorMessages {
     public static final String EMPTY_SELECTION = "Must select valid options!";
     public static final String YOUTUBE_ID = "Invalid YouTube id format!";
     public static final String FILE_EMPTY = "Must upload file!";
+    public static final String LENGTH_MIN_TEN = "Length must be equal or more than 10!";
+    public static final String BAD_REQUEST = "Operation cannot be performed!";
+    public static final String SUCCESSFUL_DELETE_COMMENT = "Comment with id %d deleted!";
 }

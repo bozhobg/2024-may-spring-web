@@ -1,6 +1,7 @@
 package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.constants.ErrorMessages;
+import bg.softuni.pathfinder.model.dto.CommentContentPostDTO;
 import bg.softuni.pathfinder.model.dto.PictureAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
@@ -43,6 +44,11 @@ public class RouteController {
     ) {
         this.routeService = routeService;
         this.currentUser = currentUser;
+    }
+
+    @ModelAttribute("comment")
+    public CommentContentPostDTO comment() {
+        return new CommentContentPostDTO();
     }
 
     @GetMapping

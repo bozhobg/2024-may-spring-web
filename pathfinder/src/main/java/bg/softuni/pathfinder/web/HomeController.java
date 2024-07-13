@@ -52,7 +52,13 @@ public class HomeController {
 
     @ModelAttribute("weatherData")
     public Map<String, CurrentWeatherDTO> getWeatherData() throws JsonProcessingException {
-        return this.weatherService.getTemps();
+//        disabling realtime Rest consumption to save on api requests count
+//        return this.weatherService.getTemps();
+
+        return Map.of(
+                "varna", new CurrentWeatherDTO(32.2, "/images/weather-icons/01d.png"),
+                "sofia", new CurrentWeatherDTO(26.8, "/images/weather-icons/02n.png")
+                );
     }
 
     @GetMapping("/")
