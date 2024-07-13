@@ -87,6 +87,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Long delete(Long commentId) {
+        if (!currentUser.isLogged()) return null;
+
         User user = this.userService.getById(currentUser.getId());
         Comment comment = this.commentRepository.findById(commentId).orElse(null);
 

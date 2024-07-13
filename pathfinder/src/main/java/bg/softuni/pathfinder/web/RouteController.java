@@ -1,6 +1,5 @@
 package bg.softuni.pathfinder.web;
 
-import bg.softuni.pathfinder.constants.ErrorMessages;
 import bg.softuni.pathfinder.model.dto.CommentContentPostDTO;
 import bg.softuni.pathfinder.model.dto.PictureAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteAddDTO;
@@ -8,21 +7,16 @@ import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
 import bg.softuni.pathfinder.model.enums.CategoryType;
 import bg.softuni.pathfinder.model.enums.Level;
 import bg.softuni.pathfinder.service.RouteService;
-import bg.softuni.pathfinder.util.CurrentUser;
 import bg.softuni.pathfinder.util.RedirectUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
 
 @Controller
@@ -35,15 +29,12 @@ public class RouteController {
     private static final String ATTR_UPLOAD = "uploadPicture";
 
     private final RouteService routeService;
-    private final CurrentUser currentUser;
 
     @Autowired
     public RouteController(
-            RouteService routeService,
-            CurrentUser currentUser
+            RouteService routeService
     ) {
         this.routeService = routeService;
-        this.currentUser = currentUser;
     }
 
     @ModelAttribute("comment")
@@ -69,8 +60,6 @@ public class RouteController {
     public String getAddRoute(
             Model model
     ) {
-        if (!currentUser.isLogged()) return "redirect:/users/login";
-
 //        TODO:
         model.addAttribute("levels", Level.values());
         model.addAttribute("cats", CategoryType.values());
@@ -97,8 +86,6 @@ public class RouteController {
 //        TODO: different approach with multipart form, upload file in binding model
 //        CASE: binding result should be immediately after the binding model. Multipart in between throws!
 
-        if (!currentUser.isLogged()) return "redirect:/users/login";
-
         if (bindingResult.hasErrors() || gpxFile.isEmpty()) {
 
             rAttrs.addFlashAttribute("invalidFile", true);
@@ -124,8 +111,6 @@ public class RouteController {
             @PathVariable Long id,
             Model model
     ) {
-        if (!currentUser.isLogged()) return "redirect:/users/login";
-
         RouteDetailsDTO routeData = this.routeService.getRouteDetails(id);
 
         if (routeData == null) return "redirect:/routes";
@@ -135,8 +120,6 @@ public class RouteController {
         if (!model.containsAttribute(ATTR_UPLOAD)) {
             model.addAttribute(ATTR_UPLOAD, new PictureAddDTO());
         }
-
-//        TODO: provide/post/approve comments through rest, render using js, gpx map, video iframe, upload pic, download gpx
 
         return "route-details";
     }

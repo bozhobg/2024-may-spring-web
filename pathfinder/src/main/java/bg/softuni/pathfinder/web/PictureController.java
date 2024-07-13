@@ -3,14 +3,11 @@ package bg.softuni.pathfinder.web;
 import bg.softuni.pathfinder.model.dto.PictureAddDTO;
 import bg.softuni.pathfinder.service.PictureService;
 import bg.softuni.pathfinder.service.UploadService;
-import bg.softuni.pathfinder.util.CurrentUser;
 import bg.softuni.pathfinder.util.RedirectUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -31,23 +27,17 @@ public class PictureController {
 
     private final PictureService pictureService;
     private final UploadService uploadService;
-    private final CurrentUser currentUser;
 
     @Autowired
     public PictureController(
             PictureService pictureService,
-            UploadService uploadService,
-            CurrentUser currentUser
+            UploadService uploadService
     ) {
         this.pictureService = pictureService;
         this.uploadService = uploadService;
-        this.currentUser = currentUser;
     }
 
 //    TODO: should upload directly to cloud service, and store just links
-
-//    @GetMapping("/{id}")
-//    public String getImage() {}
 
     @GetMapping("/{routeId}/{filename}")
     public ResponseEntity<Resource> getPicture(
@@ -89,8 +79,6 @@ public class PictureController {
             BindingResult bindingResult,
             RedirectAttributes rAttrs
     ) throws IOException {
-
-        if (!currentUser.isLogged()) return "redirect:/users/login";
 
 //        TODO: on redirect picture for upload not part of model
 

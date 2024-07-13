@@ -2,7 +2,6 @@ package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.model.dto.CommentContentPostDTO;
 import bg.softuni.pathfinder.service.CommentService;
-import bg.softuni.pathfinder.util.CurrentUser;
 import bg.softuni.pathfinder.util.RedirectUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CommentsController {
 
     private final CommentService commentService;
-    private final CurrentUser currentUser;
 
     @Autowired
     public CommentsController(
-            CommentService commentService,
-            CurrentUser currentUser
+            CommentService commentService
     ) {
         this.commentService = commentService;
-        this.currentUser = currentUser;
     }
 
     @PostMapping("/add/{routeId}")
@@ -37,9 +33,6 @@ public class CommentsController {
             RedirectAttributes rAttrs
 
     ) {
-        if (!currentUser.isLogged()) {
-            return "redirect:/users/login";
-        }
 
         if (bindingResult.hasErrors()) {
             RedirectUtil.setRedirectAttrs(rAttrs, bindingModel, bindingResult, "comment");
