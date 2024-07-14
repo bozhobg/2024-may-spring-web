@@ -20,14 +20,6 @@ public class UploadServiceImpl implements UploadService {
     private final Path gpxBasePath = Path.of(".", "src", "main", "resources" , "storage", "gpx");
     private final Path picBasePath = Path.of(".", "src", "main", "resources" , "storage", "pictures");
 
-    private final CurrentUser currentUser;
-
-    @Autowired
-    public UploadServiceImpl(
-            CurrentUser currentUser
-    ) {
-        this.currentUser = currentUser;
-    }
 
     @Override
     public String uploadGpx(MultipartFile gpxFile, Long userId) throws IOException {
@@ -48,10 +40,9 @@ public class UploadServiceImpl implements UploadService {
     }
 
     @Override
-    public String uploadPicture(PictureAddDTO dto) throws IOException {
+    public String uploadPicture(PictureAddDTO dto, Long userId) throws IOException {
 
         Long routeId = dto.getRouteId();
-        Long userId = this.currentUser.getId();
         String filename = dto.getPicture().getOriginalFilename();
 
         if (filename == null) return null;
@@ -70,6 +61,6 @@ public class UploadServiceImpl implements UploadService {
             return null;
         }
 
-        return "/pictures/" + subPath.toString();
+        return "/pictures/" + subPath;
     }
 }

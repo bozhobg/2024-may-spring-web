@@ -8,9 +8,9 @@ import java.util.List;
 public interface CommentService {
     List<CommentDTO> getAllForRouteId(Long routeId);
 
-    CommentDTO approve(Long id);
+    boolean add(CommentContentPostDTO bindingModel, Long routeId, Long id);
 
-    boolean add(CommentContentPostDTO bindingModel, Long routeId);
+    CommentDTO approve(Long id);
 
     Long delete(Long commentId);
 }

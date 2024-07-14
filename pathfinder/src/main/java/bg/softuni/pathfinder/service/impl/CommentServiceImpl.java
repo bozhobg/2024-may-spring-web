@@ -24,7 +24,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final RouteRepository routeRepository;
     private final UserService userService;
-    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -32,13 +31,11 @@ public class CommentServiceImpl implements CommentService {
             CommentRepository commentRepository,
             RouteRepository routeRepository,
             UserService userService,
-            CurrentUser currentUser,
             ModelMapper modelMapper
     ) {
         this.commentRepository = commentRepository;
         this.routeRepository = routeRepository;
         this.userService = userService;
-        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
@@ -49,6 +46,26 @@ public class CommentServiceImpl implements CommentService {
                 .stream()
                 .map(this::mapToDTO)
                 .toList();
+    }
+
+    @Override
+    public boolean add(CommentContentPostDTO bindingModel, Long routeId, Long userId) {
+
+        Route route = this.routeRepository.findById(routeId).orElse(null);
+
+        if (userId == null || route == null) return false;
+
+        User user = this.userService.getById(userId);
+
+        Comment newComment = new Comment()
+                .setAuthor(user)
+                .setRoute(route)
+                .setCreated(Instant.now())
+                .setTextContent(bindingModel.getTextContent());
+
+        this.commentRepository.save(newComment);
+
+        return true;
     }
 
     @Override
@@ -65,34 +82,15 @@ public class CommentServiceImpl implements CommentService {
         return mapToDTO(byId);
     }
 
-    @Override
-    public boolean add(CommentContentPostDTO bindingModel, Long routeId) {
-
-        Route route = this.routeRepository.findById(routeId).orElse(null);
-
-        if (!currentUser.isLogged() || route == null) return false;
-
-        User user = this.userService.getById(currentUser.getId());
-
-        Comment newComment = new Comment()
-                .setAuthor(user)
-                .setRoute(route)
-                .setCreated(Instant.now())
-                .setTextContent(bindingModel.getTextContent());
-
-        this.commentRepository.save(newComment);
-
-        return true;
-    }
 
     @Override
     public Long delete(Long commentId) {
-        if (!currentUser.isLogged()) return null;
-
-        User user = this.userService.getById(currentUser.getId());
+//        if (!currentUser.isLogged()) return null;
+//
+//        User user = this.userService.getById(currentUser.getId());
         Comment comment = this.commentRepository.findById(commentId).orElse(null);
 
-        if (user == null || comment == null) return null;
+        if (comment == null) return null;
 
         this.commentRepository.delete(comment);
 

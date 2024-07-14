@@ -8,5 +8,5 @@ public interface UploadService {
 
     String uploadGpx(MultipartFile gpxFile, Long userId) throws IOException;
 
-    String uploadPicture(PictureAddDTO dto) throws IOException;
+    String uploadPicture(PictureAddDTO dto, Long userId) throws IOException;
 }

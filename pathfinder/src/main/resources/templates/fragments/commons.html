@@ -1,5 +1,7 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head th:fragment="head">
     <meta charset="UTF-8"/>
@@ -23,44 +25,38 @@
     <nav class="main-nav">
         <ul>
             <li>
-                <a th:href="@{/}">Home</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/home}">Home</a>
+                <a sec:authorize="!isAuthenticated()" th:href="@{/}">Home</a>
             </li>
-            <th:block th:unless="${@currentUser.isLogged()}">
+            <th:block sec:authorize="!isAuthenticated()">
                 <li>
                     <a th:href="@{/users/login}">Login</a>
                 </li>
-            </th:block>
-            <th:block th:unless="${@currentUser.isLogged()}">
                 <li>
                     <a th:href="@{/users/register}">Register</a>
                 </li>
-            </th:block>
-            <th:block th:unless="${@currentUser.isLogged()}">
                 <li>
                     <a th:href="@{/about}">About</a>
                 </li>
             </th:block>
-            <th:block th:if="${@currentUser.isLogged()}">
+            <th:block sec:authorize="isAuthenticated()">
                 <li>
                     <a th:href="@{/routes/add}">Add new route</a>
                 </li>
-            </th:block>
-            <th:block th:if="${@currentUser.isLogged()}">
                 <li>
                     <a th:href="@{/users/profile}">Profile</a>
                 </li>
             </th:block>
-            <th:block th:if="${@currentUser.isAdmin()}">
+            <th:block sec:authorize="hasRole('ADMIN')">
                 <li>
-                    <!--                    TODO: what is the functionality? -->
                     <a th:href="@{/}">Admin</a>
                 </li>
             </th:block>
             <!--            <th:block th:if="${@currentUser.isLogged()}">-->
-            <th:block th:if="${@currentUser.isLogged()}">
+            <th:block sec:authorize="isAuthenticated()">
                 <li class="form-inline">
                     <!--                    <a href="/">Logout</a>-->
-<!--                    RESOLVED: How to stylize form and button to other nav elements-->
+                    <!--                    RESOLVED: How to stylize form and button to other nav elements-->
                     <form th:action="@{/users/logout}"
                           th:method="POST">
                         <button type="submit" class="border-0">Logout</button>

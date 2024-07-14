@@ -1,6 +1,5 @@
 package bg.softuni.pathfinder.service;
 
-import bg.softuni.pathfinder.model.dto.UserLoginDTO;
 import bg.softuni.pathfinder.model.dto.UserProfileDTO;
 import bg.softuni.pathfinder.model.dto.UserRegisterDTO;
 import bg.softuni.pathfinder.model.entity.User;
@@ -17,10 +16,5 @@ public interface UserService {
     @Transactional
     boolean register(UserRegisterDTO dto);
 
-    @Transactional
-    boolean login(UserLoginDTO dto);
-
-    void logout();
-
-    UserProfileDTO getUserProfileData();
+    UserProfileDTO getUserProfileData(Long userId);
 }

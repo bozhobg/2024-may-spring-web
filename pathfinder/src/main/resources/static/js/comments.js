@@ -77,7 +77,7 @@ function postHandler(event) {
 function approveHandler(event) {
     event.preventDefault();
 
-    const baseUrl = '/api/comments/approve/'
+    const baseUrl = 'http://localhost:8080/api/comments/approve/'
     let id = event.target.dataset['id'];
 
     const http = {

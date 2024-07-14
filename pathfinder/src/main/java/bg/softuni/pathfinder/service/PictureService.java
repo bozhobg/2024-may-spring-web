@@ -16,5 +16,5 @@ public interface PictureService {
     List<PictureShortDTO> getRoutePictures(Long routeId);
 
     @Transactional
-    boolean add(PictureAddDTO bindingModel) throws IOException;
+    boolean add(PictureAddDTO bindingModel, Long userId) throws IOException;
 }

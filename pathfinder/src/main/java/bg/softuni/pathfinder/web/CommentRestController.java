@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/api/comments")
 public class CommentRestController {
 
+//    TODO: how to implement with security? JSON Web Token (JWT)
 //    TODO: throw and handle exceptions
 
     private final CommentService commentService;
@@ -32,13 +33,7 @@ public class CommentRestController {
         return this.commentService.getAllForRouteId(routeId);
     }
 
-    @PostMapping("/add/{routeId}")
-    public void post(
-            @PathVariable("routeId") Long routeId
-    ) {
-//        TODO: auth
-
-    }
+//   TODO: post over rest, abandon mvc logic
 
     @PatchMapping("/approve/{id}")
     public ResponseEntity<CommentDTO> approve(

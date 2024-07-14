@@ -1,12 +1,13 @@
 package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.model.dto.UserProfileDTO;
+import bg.softuni.pathfinder.model.user.AppUserDetails;
 import bg.softuni.pathfinder.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,16 +25,13 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfile(
+            @AuthenticationPrincipal AppUserDetails userDetails,
             Model model
     ) {
-        UserProfileDTO profileData = this.userService.getUserProfileData();
+        UserProfileDTO profileData = this.userService.getUserProfileData(userDetails.getId());
         model.addAttribute("profileData", profileData);
         return "profile";
     }
 
-    @PostMapping("/logout")
-    public String logout() {
-        this.userService.logout();
-        return "redirect:/";
-    }
+//    TODO: test logout without controller
 }

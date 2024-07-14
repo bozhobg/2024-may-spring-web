@@ -21,5 +21,5 @@ public interface RouteService {
     @Transactional
     RouteDetailsDTO getRouteDetails(Long id);
 
-    Long add(RouteAddDTO bindingModel, MultipartFile gpxFile) throws IOException;
+    Long add(RouteAddDTO bindingModel, MultipartFile gpxFile, Long userId) throws IOException;
 }

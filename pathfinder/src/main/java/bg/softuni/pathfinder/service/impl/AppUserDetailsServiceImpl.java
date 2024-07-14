@@ -34,6 +34,7 @@ public class AppUserDetailsServiceImpl implements UserDetailsService {
     private static AppUserDetails mapToAppUserDetails(User user) {
 
         AppUserDetails appUserDetails = new AppUserDetails(
+                user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getRoles().stream().map(AppUserDetailsServiceImpl::mapAuthority).toList(),

@@ -1,6 +1,7 @@
 package bg.softuni.pathfinder.web;
 
 import bg.softuni.pathfinder.model.dto.PictureAddDTO;
+import bg.softuni.pathfinder.model.user.AppUserDetails;
 import bg.softuni.pathfinder.service.PictureService;
 import bg.softuni.pathfinder.service.UploadService;
 import bg.softuni.pathfinder.util.RedirectUtil;
@@ -10,6 +11,7 @@ import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,8 +79,9 @@ public class PictureController {
     public String postPicture(
             @Valid PictureAddDTO bindingModel,
             BindingResult bindingResult,
-            RedirectAttributes rAttrs
-    ) throws IOException {
+            RedirectAttributes rAttrs,
+            @AuthenticationPrincipal AppUserDetails userDetails
+            ) throws IOException {
 
 //        TODO: on redirect picture for upload not part of model
 
@@ -88,7 +91,7 @@ public class PictureController {
             return "redirect:/routes/" + bindingModel.getRouteId();
         }
 
-        this.pictureService.add(bindingModel);
+        this.pictureService.add(bindingModel, userDetails.getId());
 
         return "redirect:/routes/" + bindingModel.getRouteId();
     }

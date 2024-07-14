@@ -6,10 +6,12 @@ import bg.softuni.pathfinder.model.dto.RouteAddDTO;
 import bg.softuni.pathfinder.model.dto.RouteDetailsDTO;
 import bg.softuni.pathfinder.model.enums.CategoryType;
 import bg.softuni.pathfinder.model.enums.Level;
+import bg.softuni.pathfinder.model.user.AppUserDetails;
 import bg.softuni.pathfinder.service.RouteService;
 import bg.softuni.pathfinder.util.RedirectUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,12 +48,10 @@ public class RouteController {
     public String routes(
             Model model
     ) {
-//        TODO: unauthenticated access?
 
         if (!model.containsAttribute(ATTR_ROUTES)) {
             model.addAttribute(ATTR_ROUTES, this.routeService.getRoutes());
         }
-
 
         return "routes";
     }
@@ -81,8 +81,9 @@ public class RouteController {
             @Valid RouteAddDTO bindingModel,
             BindingResult bindingResult,
             @RequestPart("gpxCoordinates") MultipartFile gpxFile,
-            RedirectAttributes rAttrs
-    ) throws IOException {
+            RedirectAttributes rAttrs,
+            @AuthenticationPrincipal AppUserDetails userDetails
+            ) throws IOException {
 //        TODO: different approach with multipart form, upload file in binding model
 //        CASE: binding result should be immediately after the binding model. Multipart in between throws!
 
@@ -94,7 +95,7 @@ public class RouteController {
             return "redirect:/routes/add";
         }
 
-        Long routeId = this.routeService.add(bindingModel, gpxFile);
+        Long routeId = this.routeService.add(bindingModel, gpxFile, userDetails.getId());
 
         if (routeId == null) {
             rAttrs.addFlashAttribute(ATTR_ADD, bindingModel);

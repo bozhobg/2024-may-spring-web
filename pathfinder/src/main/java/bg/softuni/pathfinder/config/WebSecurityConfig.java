@@ -34,19 +34,20 @@ public class WebSecurityConfig {
         return httpSecurity
                 .authorizeHttpRequests(
                         authorizeRequests ->
-                                authorizeRequests
-                                        .requestMatchers("/", "/about", "/users/login", "/users/register", "/routes",
+                                authorizeRequests.requestMatchers(
+                                        "/", "/about", "/users/login", "/users/register", "/routes",
 //                                        TODO: how to limit to certain file types, provide small amount
                                                 "/pictures/*/*"
                                         ).permitAll()
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//                                        .requestMatchers("/api/comments/approve/*", "/api/comments/delete/*")
+//                                        .hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN")
                                         .anyRequest()
                                         .authenticated()
                 )
                 .formLogin(
                         login ->
-                                login
-                                        .loginPage("/users/login")
+                                login.loginPage("/users/login")
                                         .usernameParameter("username")
                                         .passwordParameter("password")
 //                                TODO: doesn't redirect to previous unauthorized page visit
@@ -56,10 +57,14 @@ public class WebSecurityConfig {
                 )
                 .logout(
                         logout ->
-                                logout
-                                        .logoutUrl("/users/logout")
+                                logout.logoutUrl("/users/logout")
                                         .logoutSuccessUrl("/")
                                         .invalidateHttpSession(true)
+                )
+                .rememberMe(
+//                        TODO: add checkbox, invalidate remember me token!
+                        remember ->
+                                remember.tokenValiditySeconds(0)
                 )
                 .build();
     }

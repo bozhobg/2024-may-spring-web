@@ -23,7 +23,6 @@ public class PictureServiceImpl implements PictureService {
     private final PictureRepository pictureRepository;
     private final UploadService uploadService;
     private final UserService userService;
-    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -31,13 +30,11 @@ public class PictureServiceImpl implements PictureService {
             PictureRepository pictureRepository,
             UploadService uploadService,
             UserService userService,
-            CurrentUser currentUser,
             ModelMapper modelMapper
     ) {
         this.pictureRepository = pictureRepository;
         this.uploadService = uploadService;
         this.userService = userService;
-        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
@@ -65,9 +62,9 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public boolean add(PictureAddDTO dto) throws IOException {
-        String path = this.uploadService.uploadPicture(dto);
-        Picture newPicture = mapToEntity(dto);
+    public boolean add(PictureAddDTO dto, Long userId) throws IOException {
+        String path = this.uploadService.uploadPicture(dto, userId);
+        Picture newPicture = mapToEntity(dto, userId);
 
         if (path == null) return false;
 
@@ -81,10 +78,10 @@ public class PictureServiceImpl implements PictureService {
         return modelMapper.map(picture, PictureShortDTO.class);
     }
 
-    private Picture mapToEntity(PictureAddDTO dto) {
+    private Picture mapToEntity(PictureAddDTO dto, Long userId) {
 
         Picture entity = modelMapper.map(dto, Picture.class);
-        User user = this.userService.getById(this.currentUser.getId());
+        User user = this.userService.getById(userId);
         entity.setAuthor(user);
         entity.setId(null); // mapped by mm
 
