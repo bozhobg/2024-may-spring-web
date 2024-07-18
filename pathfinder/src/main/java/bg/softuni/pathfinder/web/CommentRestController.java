@@ -14,6 +14,7 @@ import java.util.List;
 public class CommentRestController {
 
 //    TODO: how to implement with security? JSON Web Token (JWT)
+//    TODO: @PreAuthorize('hasRole(AAA)') + @EnableGlobalMethodSecurity on SecConfig
 //    TODO: throw and handle exceptions
 
     private final CommentService commentService;

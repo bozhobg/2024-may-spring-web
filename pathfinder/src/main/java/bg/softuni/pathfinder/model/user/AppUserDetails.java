@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 public class AppUserDetails extends User {
+//    TODO: 2nd approach: impl of user helper service to provide additional info for UserDetails
 
     private Long id;
     private String fullName;

@@ -8,18 +8,26 @@ import bg.softuni.pathfinder.model.enums.CategoryType;
 import bg.softuni.pathfinder.model.enums.Level;
 import bg.softuni.pathfinder.model.user.AppUserDetails;
 import bg.softuni.pathfinder.service.RouteService;
+import bg.softuni.pathfinder.service.exception.ObjectNotFoundException;
+import bg.softuni.pathfinder.service.exception.UploadFileException;
 import bg.softuni.pathfinder.util.RedirectUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 
 @Controller
 @RequestMapping("/routes")
@@ -48,7 +56,6 @@ public class RouteController {
     public String routes(
             Model model
     ) {
-
         if (!model.containsAttribute(ATTR_ROUTES)) {
             model.addAttribute(ATTR_ROUTES, this.routeService.getRoutes());
         }
@@ -83,7 +90,7 @@ public class RouteController {
             @RequestPart("gpxCoordinates") MultipartFile gpxFile,
             RedirectAttributes rAttrs,
             @AuthenticationPrincipal AppUserDetails userDetails
-            ) throws IOException {
+    ) throws IOException {
 //        TODO: different approach with multipart form, upload file in binding model
 //        CASE: binding result should be immediately after the binding model. Multipart in between throws!
 
@@ -95,15 +102,15 @@ public class RouteController {
             return "redirect:/routes/add";
         }
 
-        Long routeId = this.routeService.add(bindingModel, gpxFile, userDetails.getId());
-
-        if (routeId == null) {
-            rAttrs.addFlashAttribute(ATTR_ADD, bindingModel);
+        try {
+            Long routeId = this.routeService.add(bindingModel, gpxFile, userDetails.getId());
+            return "redirect:/routes/" + routeId;
+        } catch (IllegalArgumentException exc) {
 
             return "redirect:/routes/add";
         }
 
-        return "redirect:/routes/" + routeId;
+//        catch multiple exceptions catch (IllegalArgumentException | UploadFileException exc) -> must not contain ancestor and subclass
     }
 
 
@@ -112,9 +119,9 @@ public class RouteController {
             @PathVariable Long id,
             Model model
     ) {
-        RouteDetailsDTO routeData = this.routeService.getRouteDetails(id);
+//        TODO: render map and youtube iframe
 
-        if (routeData == null) return "redirect:/routes";
+        RouteDetailsDTO routeData = this.routeService.getRouteDetails(id);
 
         model.addAttribute(ATTR_DETAILS, routeData);
 
@@ -125,5 +132,14 @@ public class RouteController {
         return "route-details";
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({ObjectNotFoundException.class})
+    public ModelAndView handleRouteNotFound(ObjectNotFoundException onfe) {
+        ModelAndView mav = new ModelAndView("error-template");
+        mav.addObject("errorMessage", onfe.getMessage());
+        mav.addObject("forId", onfe.getId());
+
+        return mav;
+    }
 
 }

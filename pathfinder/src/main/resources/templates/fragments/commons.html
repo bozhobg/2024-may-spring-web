@@ -28,7 +28,7 @@
                 <a sec:authorize="isAuthenticated()" th:href="@{/home}">Home</a>
                 <a sec:authorize="!isAuthenticated()" th:href="@{/}">Home</a>
             </li>
-            <th:block sec:authorize="!isAuthenticated()">
+            <th:block sec:authorize="hasRole('ANONYMOUS')">
                 <li>
                     <a th:href="@{/users/login}">Login</a>
                 </li>

@@ -53,6 +53,7 @@ public class PictureServiceImpl implements PictureService {
     @Override
     public List<PictureShortDTO> getRoutePictures(Long routeId) {
 
+
         List<PictureShortDTO> list = this.pictureRepository.findByRoute_Id(routeId)
                 .stream()
                 .map(this::mapToShort)
@@ -63,10 +64,10 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public boolean add(PictureAddDTO dto, Long userId) throws IOException {
+
         String path = this.uploadService.uploadPicture(dto, userId);
         Picture newPicture = mapToEntity(dto, userId);
 
-        if (path == null) return false;
 
         newPicture.setUrl(path);
         this.pictureRepository.save(newPicture);

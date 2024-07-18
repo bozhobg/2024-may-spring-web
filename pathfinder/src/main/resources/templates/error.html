@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="~{fragments/commons::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:replace="~{fragments/commons::header-nav}">
+    <nav class="main-nav">
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/">Login</a>
+            </li>
+            <li>
+                <a href="/">Register</a>
+            </li>
+            <li>
+                <a href="/">About</a>
+            </li>
+            <li>
+                <a href="/">Add new route</a>
+            </li>
+            <li>
+                <a href="/">Profile</a>
+            </li>
+            <li>
+                <a href="/">Admin</a>
+            </li>
+            <li>
+                <a href="/">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div >
+<!--    <div class="text-center"><img src="/images/error2.gif" alt="Error gif..."></div>-->
+    <h1 class="text-center font-weight-bold mt-5">Ooops, something went wrong ...</h1>
+    <h4 class="text-center font-weight-bold">Please let the <a class="text-white" href="mailto:pathfinder@pathfinder">devs</a> know!</h4>
+    <div class="text-center my-5">
+        <img th:src="@{/images/error3.gif}" alt="">
+    </div>
+</div>
+<footer th:replace="~{fragments/commons::footer}"
+        class="footer bg-blur rounded">
+    <div class="container-fluid text-center">
+        <div class="h5 text-white">
+            &copy; Lucho, Chocho & Spring Advanced Students 2021. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

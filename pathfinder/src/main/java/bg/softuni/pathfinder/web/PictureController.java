@@ -28,15 +28,12 @@ import java.nio.file.Path;
 public class PictureController {
 
     private final PictureService pictureService;
-    private final UploadService uploadService;
 
     @Autowired
     public PictureController(
-            PictureService pictureService,
-            UploadService uploadService
+            PictureService pictureService
     ) {
         this.pictureService = pictureService;
-        this.uploadService = uploadService;
     }
 
 //    TODO: should upload directly to cloud service, and store just links

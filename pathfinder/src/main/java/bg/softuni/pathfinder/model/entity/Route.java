@@ -41,6 +41,7 @@ public class Route {
     private Set<Category> categories;
 
     public Route() {
+
         this.categories = new HashSet<>();
         this.comments = new HashSet<>();
         this.pictures = new HashSet<>();

@@ -37,11 +37,11 @@ public class WebSecurityConfig {
                                 authorizeRequests.requestMatchers(
                                         "/", "/about", "/users/login", "/users/register", "/routes",
 //                                        TODO: how to limit to certain file types, provide small amount
-                                                "/pictures/*/*"
+                                                "/pictures/*/*", "/error"
                                         ).permitAll()
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 //                                        .requestMatchers("/api/comments/approve/*", "/api/comments/delete/*")
-//                                        .hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN")
+//                                        .hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN") TODO: How?
                                         .anyRequest()
                                         .authenticated()
                 )

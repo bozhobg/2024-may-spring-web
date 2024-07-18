@@ -10,6 +10,7 @@ import bg.softuni.pathfinder.model.entity.Route;
 import bg.softuni.pathfinder.model.entity.User;
 import bg.softuni.pathfinder.model.user.AppUserDetails;
 import bg.softuni.pathfinder.service.*;
+import bg.softuni.pathfinder.service.exception.ObjectNotFoundException;
 import bg.softuni.pathfinder.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +56,6 @@ public class RouteServiceImpl implements RouteService {
                 .map(this::mapToShortInfoDto)
                 .toList();
 
-        if (allRoutes.isEmpty()) {
-//            TODO:
-        }
-
         return allRoutes;
     }
 
@@ -72,9 +69,8 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public RouteDetailsDTO getRouteDetails(Long id) {
-        Route route = this.routeRepository.findById(id).orElse(null);
-
-        if (route == null) return null;
+        Route route = this.routeRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Route with id: " + id + ", not found!", id));
 
         return mapToRouteDetails(route);
     }
@@ -84,8 +80,6 @@ public class RouteServiceImpl implements RouteService {
 //        TODO: disaster
 
         Route newRoute = mapToEntity(bindingModel, gpxFile, userId);
-
-        if (newRoute == null) return null;
 
         Long routeId = this.routeRepository.save(newRoute).getId();
 
@@ -113,7 +107,7 @@ public class RouteServiceImpl implements RouteService {
             RouteAddDTO dto,
             MultipartFile gpxFile,
             Long userid
-    ) {
+    ) throws IOException {
 
         Route newRoute = modelMapper.map(dto, Route.class);
 
@@ -121,16 +115,12 @@ public class RouteServiceImpl implements RouteService {
         newRoute.setAuthor(user);
 
         Set<Category> categories = this.categoryService.findByCategoryTypes(dto.getCategories());
-        if (categories.isEmpty()) return null;
+
+        if (categories.isEmpty()) throw new IllegalArgumentException("Invalid category selection!");
+
         newRoute.setCategories(categories);
 
-        String relPath;
-
-        try {
-            relPath = this.uploadService.uploadGpx(gpxFile, user.getId());
-        } catch (Exception exc) {
-            return null;
-        }
+        String relPath = this.uploadService.uploadGpx(gpxFile, user.getId());
 
         newRoute.setGpxCoordinates(relPath);
 

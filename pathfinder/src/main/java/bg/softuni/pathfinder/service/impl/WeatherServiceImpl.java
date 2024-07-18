@@ -67,7 +67,9 @@ public class WeatherServiceImpl implements WeatherService {
                 .body(String.class);
 
         ObjectMapper objMapper = new ObjectMapper();
+
         JsonNode jsonNode = objMapper.readTree(jsonRaw);
+
         JsonNode current = jsonNode.get("current");
         Double temp = current.get("temperature_2m").asDouble();
         Integer cond = current.get("weather_code").asInt();
